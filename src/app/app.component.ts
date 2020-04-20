@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {AuthService} from './services/auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'store-magic-collection';
+
+  constructor(public authService: AuthService) { }
+
+  logout() {
+    this.authService.doLogout();
+  }
 }
