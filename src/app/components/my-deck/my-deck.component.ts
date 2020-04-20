@@ -20,7 +20,7 @@ export class MyDeckComponent implements OnInit {
     this.myDeck = [];
     console.log('ssss');
     this.decksService.getMyDecks().subscribe((data: any[]) => {
-      this.myDeck = data.data;
+      this.myDeck = data;
     });
   }
 
