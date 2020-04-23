@@ -1,13 +1,16 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import {Card} from '../models/card.model';
+import {DecksService} from '../services/decks/decks.service';
 
 /**
  * @title Input with a clear button
  */
 @Component({
-  selector: 'increment-input',
+  selector: 'app-increment-input',
   templateUrl: './increment-input.component.html',
   styleUrls: ['./increment-input.component.scss'],
+  providers: [DecksService]
 })
 export class IncrementInputComponent {
 
@@ -15,16 +18,28 @@ export class IncrementInputComponent {
     formField: new FormControl()
   });
 
+  constructor(private serviceDeck: DecksService) {
+  }
+
+  @Input()card: Card;
   _value: number = 0;
   _step: number = 1;
   _min: number = 0;
   _max: number = Infinity;
-  _wrap: boolean = false;
+  _wrap: boolean = true;
   color: string = 'default';
+
+  @Output()changeCard: EventEmitter<Card> = new EventEmitter();
 
   @Input('value')
   set inputValue(_value: number) {
     this._value = this.parseNumber(_value);
+  }
+
+  @Input('card')
+  set cardValue(card) {
+    console.log(card);
+    this.card = card;
   }
 
   @Input()
@@ -72,7 +87,9 @@ export class IncrementInputComponent {
     }
 
     this._value = inputValue;
-    console.log(this._value)
+    console.log(this._value);
+    this.card.quantity = this._value;
+    this.changeCard.emit(this.card);
   }
 
   private wrappedValue(inputValue): number {

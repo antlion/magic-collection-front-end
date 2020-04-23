@@ -13,3 +13,8 @@ html,body,.auth-wrapper{height:100%;}
 label{font-weight:500;}
 .container{max-width:600px;}
 .inner-main{padding-top:130px;width:100%;}
+
+.card-horizontal {
+  display: flex;
+  flex: 1 1 auto;
+}

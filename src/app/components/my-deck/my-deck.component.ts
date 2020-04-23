@@ -9,24 +9,28 @@ import {DecksService} from '../../services/decks/decks.service';
 @Component({
   selector: 'app-my-deck',
   templateUrl: './my-deck.component.html',
-  styleUrls: ['./my-deck.component.scss']
+  styleUrls: ['./my-deck.component.scss'],
+  providers: [DecksService]
 })
 export class MyDeckComponent implements OnInit {
 
   myDeck: Deck[];
-  constructor(public dialog: MatDialog, public decksService: DecksService) { }
+  constructor(public dialog: MatDialog, public decksService: DecksService ) {
+
+
+
+  }
 
   ngOnInit(): void {
     this.myDeck = [];
     console.log('ssss');
     this.decksService.getMyDecks().subscribe((data: any[]) => {
-      this.myDeck = data;
+      this.myDeck = data['data'];
     });
   }
 
   addNewDeck() {
     const dialogRef = this.dialog.open(AddDeckComponent, {
-      width: '250px',
       data: new Deck('')
     });
 

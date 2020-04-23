@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {SearchCardService} from "../services/search-card.service";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {SearchCardService} from '../services/search-card.service';
+import {Card} from '../models/card.model';
+import {DecksService} from '../services/decks/decks.service';
+import {Deck} from '../models/deck.model';
 
 @Component({
   selector: 'app-search-card',
@@ -8,29 +11,62 @@ import {SearchCardService} from "../services/search-card.service";
 })
 export class SearchCardComponent implements OnInit {
 
-  cardList: any = []
-  _value: number = 0;
-  _step: number = 1;
-  _min: number = 0;
-  _max: number = Infinity;
-  _wrap: boolean = false;
-  color: string = 'default';
+  cardList: any = [];
+  @Input() saveToDB;
+  _value = 0;
+  _step = 1;
+  _min = 0;
+  _max = Infinity;
+  _wrap = false;
+  color = 'default';
+  @Input()deck: Deck;
+  @Input() event: any;
+  @Input()eventEmitter: EventEmitter<any>;
 
-  constructor(private searchCardService: SearchCardService) { }
+  constructor(private searchCardService: SearchCardService, private decksService: DecksService) {
+
+  }
 
   ngOnInit(): void {
 
   }
 
+  @Input('event')
+  set eventValue(event) {
+    console.log(event);
+    this.event = event;
+  }
+
+  @Input('deck')
+  set deckValue(deck) {
+    console.log(deck);
+    this.deck = deck;
+  }
+
   onSearchChange(card_name: any) {
-    this.searchCardService.get_card_by_name(card_name).subscribe((data)=>{
-      console.log(data)
-      if (data["object"] == 'list'){
-        this.cardList = data["data"];
+    this.searchCardService.get_card_by_name(card_name).subscribe((data) => {
+      console.log(data);
+      if (data['object'] === 'list'){
+        this.cardList = this.createCards(data['data']);
       }else{
-        this.cardList = [data];
+        this.cardList = this.createCards([data]);
       }
-      console.log(this.cardList.image_uris['small'])
-    })
+    });
+  }
+
+  createCards(data){
+    let cards: Array<Card> = [];
+    for (const card of data){
+      let carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line, card.mana_cost, card.image_uris.png);
+      cards.push(carNew);
+    }
+    return cards;
+  }
+
+  onCardChange($card: Card) {
+
+    this.deck.addCardToDeck($card);
+    this.eventEmitter.emit($card);
+
   }
 }

@@ -8,13 +8,13 @@ import {AlertComponent} from '../components/alert/alert.component';
 import {AlertService} from './alert.service';
 import * as jwt_decode from 'jwt-decode';
 
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  endpoint = 'http://localhost:4000/api';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
@@ -27,7 +27,7 @@ export class AuthService {
 
   // Sign-up
   signUp(user: User): Observable<any> {
-    const api = `${this.endpoint}/register-user`;
+    const api = `${environment.endpoint}/register-user`;
     return this.http.post(api, user)
       .pipe(
         catchError(this.handleError)
@@ -36,7 +36,7 @@ export class AuthService {
 
   // Sign-in
   signIn(user: User) {
-    return this.http.post<any>(`${this.endpoint}/signin`, user)
+    return this.http.post<any>(`${environment.endpoint}/signin`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token);
         // tslint:disable-next-line:no-shadowed-variable
@@ -69,7 +69,7 @@ export class AuthService {
 
   // User profile
   getUserProfile(id): Observable<any> {
-    const api = `${this.endpoint}/user-profile/${id}`;
+    const api = `${environment.endpoint}/user-profile/${id}`;
     return this.http.get(api, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {};
@@ -92,7 +92,7 @@ export class AuthService {
       // server-side error
       msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(msg)
+    console.log(msg);
     return throwError(msg);
   }
 

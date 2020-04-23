@@ -1,0 +1,22 @@
+<div class="card" style="max-width: 500px;max-height: 80px; border: 0px!important;" *ngFor="let card of cards">
+  <div class="row no-gutters">
+    <div class="col-md-3">
+
+      <a>
+        <img src="{{card.avatar}}" class="avatar" style="max-width: 5rem; max-height: 4rem;border-radius: 0.5rem">
+        <div><img src="{{card.png}}" style="max-width: 15rem"/></div>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <div class="card-body" style="padding: 0px!important;">
+        <p class="card-title">{{card.name}}</p>
+        <p class="card-text" [innerHTML]="card.manaCost"></p>
+      </div>
+    </div>
+    <div class="col-md3">
+      <app-increment-input [card]="card" [value]="card.quantity|| 0" [step]="1"
+                           [min]="0" [max]="30" [wrap]="true"></app-increment-input>
+    </div>
+  </div>
+</div>
+

@@ -34,6 +34,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import {AuthInterceptor} from './services/authconfig.interceptor';
 import {AuthGuard} from './services/auth.guard';
 import {AlertComponent} from './components/alert/alert.component';
+import { ShowDeckComponent } from './components/show-deck/show-deck.component';
+import { AddCardComponent } from './dialog/add-card/add-card.component';
+import { CardComponent } from './components/card/card.component';
 
 
 
@@ -56,7 +59,10 @@ import {AlertComponent} from './components/alert/alert.component';
     SigninComponent,
     SignupComponent,
     UserProfileComponent,
-    AlertComponent
+    AlertComponent,
+    ShowDeckComponent,
+    AddCardComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

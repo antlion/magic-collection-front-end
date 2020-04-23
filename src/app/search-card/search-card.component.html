@@ -1,69 +1,36 @@
-<div style="padding: 13px;">
-
-<!--  <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">-->
-<!--    <div fxFlex="50%">-->
-<!--      <mat-card>Simple card</mat-card>-->
-<!--    </div>-->
-<!--    <div fxFlex="50%">-->
-
-
-<!--          <img mat-card-image class="img myImg" src="{{cardList.image_uris.art_crop}}" alt="Photo of a Shiba Inu">-->
-
-
-<!--    </div>-->
-
-<!--  </div>-->
-
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <mat-form-field appearance="legacy">
-          <mat-label>Legacy form field</mat-label>
-          <input matInput placeholder="Cerca Carte" (input)="$event.target.value.length > 3 && onSearchChange($event.target.value)">
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-          <mat-hint>Hint</mat-hint>
-        </mat-form-field>
-
-<!--        <mat-list>-->
-<!--          <mat-list-item >-->
-<!--            <img matListAvatar src="..." alt="...">-->
-<!--            <mat-icon matListIcon>folder</mat-icon>-->
-<!--            <h3 matLine> asdasdasd </h3>-->
-<!--            <p matLine>-->
-<!--              <span>asdasdas </span>-->
-<!--              <span class="demo-2"> asdasdas </span>-->
-<!--            </p>-->
-<!--          </mat-list-item>-->
-<!--        </mat-list>-->
-      </div>
-      <div class="col">
-
-        <!--<mat-list>
-          <mat-list-item *ngFor="let card of cardList" style="margin-top:10px;">
-            <img matListAvatar src="{{card.image_uris.art_crop}}" alt="...">
-            <h3 matLine> {{card.name}} </h3>
-            <p matLine>
-            </p>
-          </mat-list-item>
-        </mat-list>-->
-
-        <mat-card *ngFor="let card of cardList" style="margin-top:10px;">
-          <mat-card-header>
-            <div mat-card-avatar class="example-header-image" style="background-image: url({{card.image_uris.art_crop}});"></div>
-            <mat-card-title>
-              {{card.name}}
-              <increment-input [value]="_value || 0" [step]="_step" [min]="_min" [max]="_max" [wrap]="_wrap"></increment-input>
-            </mat-card-title>
-
-
-          </mat-card-header>
-
-
-        </mat-card>
-      </div>
-
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <mat-form-field appearance="legacy">
+        <mat-label>Legacy form field</mat-label>
+        <input matInput placeholder="Cerca Carte" (input)="$event.target.value.length > 3 && onSearchChange($event.target.value)">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Hint</mat-hint>
+      </mat-form-field>
     </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="list-group">
+          <div href="#" class="list-group-item list-group-item-action" *ngFor="let card of cardList">
+            <div class="d-inline">
+              <img src="{{card.avatar}}" class="rounded float-left" style="height: 10%; width: 10%" alt="...">
+            </div>
+            <div class="d-inline">
+              {{card.name}}
+
+            </div>
+            <div class="d-block" style="float: right">
+              <app-increment-input (changeCard)="onCardChange($event)" [card]="card" [value]="_value|| 0" [step]="_step"
+                                   [min]="_min" [max]="_max" [wrap]="true"></app-increment-input>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
+
 
 
