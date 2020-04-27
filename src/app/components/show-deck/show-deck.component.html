@@ -1,44 +1,77 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Deck - <b>{{deck.name}} Cards Number: </b>
+      {{ (deck.creatures | countCards) +
+      (deck.spells | countCards) +
+      (deck.planeswalkers| countCards) +
+      (deck.lands | countCards) +
+      (deck.enchantments | countCards) +
+      (deck.artifacts | countCards)
+      }}</li>
+  </ol>
+</nav>
+
 <div class="container-fluid">
 
   <div class="row">
-    <h2>Main
-      <button class="btn btn-sm btn-primary" (click)="addCard()">Add Card</button>
-    </h2>
+    <div class="col">
+      <h2>Main
+        <button class="btn btn-sm btn-primary" (click)="addCard()">Add Card</button>
+      </h2>
+    </div>
   </div>
 
   <div class="row">
-    <div class="col-lg-4" *ngIf="deck.creatures.length >= 1">
-      <h3>Creatures <span class="badge badge-light">{{deck.creatures.length}}</span></h3>
+    <div class="col" *ngIf="deck.creatures.length >= 1">
+      <h3>Creatures <span class="badge badge-light">{{deck.creatures | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.creatures"></app-card>
+      <app-card [cards]="deck.creatures" [deck]="deck"></app-card>
 
       <div *ngIf="deck.planeswalkers.length >=1">
-        <h3>PlaneSwlaker <span class="badge badge-light">{{deck.planeswalkers.length}}</span></h3>
+        <h3>PlaneSwlaker <span class="badge badge-light">{{deck.planeswalkers | countCards}}</span></h3>
         <hr>
-        <app-card [cards]="deck.planeswalkers"></app-card>
+        <app-card [cards]="deck.planeswalkers" [deck]="deck"></app-card>
       </div>
     </div>
-    <div class="col-lg-4" *ngIf="deck.spells.length >= 1">
-      <h3>Spells <span class="badge badge-light">{{deck.spells.length}}</span></h3>
+    <div class="col" *ngIf="deck.spells.length >= 1">
+      <h3>Spells <span class="badge badge-light">{{deck.spells | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.spells"></app-card>
+      <app-card [cards]="deck.spells" [deck]="deck"></app-card>
     </div>
-    <div class="col-lg-4" *ngIf="deck.artifacts.length >= 1">
-      <h3>Artifacts <span class="badge badge-light">{{deck.artifacts.length}}</span></h3>
+    <div class="col" *ngIf="deck.artifacts.length >= 1">
+      <h3>Artifacts <span class="badge badge-light">{{deck.artifacts | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.artifacts"></app-card>
+      <app-card [cards]="deck.artifacts" [deck]="deck"></app-card>
     </div>
-    <div class="col-lg-4" *ngIf="deck.enchantments.length >= 1">
-      <h3>Enchantments <span class="badge badge-light">{{deck.enchantments.length}}</span></h3>
+    <div class="col" *ngIf="deck.enchantments.length >= 1">
+      <h3>Enchantments <span class="badge badge-light">{{deck.enchantments | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.enchantments"></app-card>
+      <app-card [cards]="deck.enchantments" [deck]="deck"></app-card>
     </div>
-    <div class="col-lg-4" *ngIf="deck.lands.length >= 1">
-      <h3>Lands <span class="badge badge-light">{{deck.lands.length}}</span></h3>
+    <div class="col" *ngIf="deck.lands.length >= 1">
+      <h3>Lands <span class="badge badge-light">{{deck.lands | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.lands"></app-card>
+      <app-card [cards]="deck.lands" [deck]="deck"></app-card>
     </div>
 
 
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h2> Sideboard
+        <button class="btn btn-sm btn-primary" (click)="addCard()">Add Card</button>
+      </h2>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col" *ngIf="deck.sideboard.length >= 1">
+      <h3>Sideboard <span class="badge badge-light">{{deck.sideboard | countCards}}</span></h3>
+      <hr>
+      <app-card [cards]="deck.sideboard" [deck]="deck"></app-card>
+
+    </div>
   </div>
 </div>

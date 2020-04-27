@@ -1,8 +1,11 @@
-<h2 mat-dialog-title>New Deck</h2>
+<h2 mat-dialog-title>Search Card</h2>
 <div mat-dialog-content>
-  <app-search-card [saveToDB]="saveToDb"  [deck]="data.deck" [event]="data.part$" [eventEmitter]="onAdd"></app-search-card>
+  <app-search-card [saveToDB]="saveToDb" [sideboard]="data.sideboard"
+                   [deck]="data.deck" [event]="data.part$" [eventEmitter]="onAdd" [collection]="data.collection">
+
+  </app-search-card>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Annulla</button>
-  <button mat-button  cdkFocusInitial>Salva</button>
+<!--  <button mat-button (click)="onNoClick()">Annulla</button>-->
+<!--  <button mat-button  cdkFocusInitial>Salva</button>-->
 </div>

@@ -1,0 +1,17 @@
+<div mat-dialog-title>New Collection</div>
+<div mat-dialog-content>
+
+  <mat-form-field>
+    <mat-label>Deck Name</mat-label>
+    <input matInput [(ngModel)]="collection.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-slide-toggle [(ngModel)]="collection.wishList">Wishlist</mat-slide-toggle>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annulla</button>
+  <button mat-button [mat-dialog-close]="collection" cdkFocusInitial>Salva</button>
+</div>

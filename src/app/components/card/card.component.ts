@@ -1,4 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Deck} from '../../models/deck.model';
+import {Card} from '../../models/card.model';
+import {DecksService} from '../../services/decks/decks.service';
+import {Collection} from '../../models/collection.model';
 
 @Component({
   selector: 'app-card',
@@ -7,10 +11,24 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class CardComponent implements OnInit {
   @Input() cards: any;
+  @Input() deck;
+  @Input() sideboard;
+  @Input() collection: Collection;
 
-  constructor() { }
+
+  constructor(private decksService: DecksService) { }
 
   ngOnInit(): void {
   }
 
+  onCardChange($card: Card) {
+    console.log('or222')
+    if (this.deck) {
+      this.deck.addCardToDeck($card, this.sideboard);
+      this.decksService.saveDeck(this.deck);
+    } else {
+      this.collection.addCard($card);
+    }
+
+  }
 }

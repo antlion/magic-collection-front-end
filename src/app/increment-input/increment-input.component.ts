@@ -75,7 +75,7 @@ export class IncrementInputComponent {
   }
 
   getColor(): string {
-    return this.color
+    return this.color;
   }
 
   incrementValue(step: number = 1): void {

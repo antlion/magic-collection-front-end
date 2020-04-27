@@ -10,6 +10,7 @@ export class Deck {
   planeswalkers: Card[] = [];
   spells: Card[] = [];
   lands: Card[] = [];
+  sideboard: Card[] = [];
 
 
   constructor(name: string) {
@@ -20,63 +21,58 @@ export class Deck {
     this.planeswalkers = [];
     this.spells = [];
     this.lands = [];
+    this.sideboard = [];
 
   }
 
-  addCardToDeck($card: Card){
+  addCardToDeck($card: Card, sideboard = false){
+    if (sideboard) {
+      this.addSingleCard(this.sideboard, $card);
+      return;
+    }
     if ($card.type.includes('Creature')) {
-      const filteredCard = this.creatures.filter(value => value.name === $card.name)[0];
-      if (filteredCard){
-        filteredCard.quantity += 1;
-      } else {
-        this.creatures.push($card);
-      }
+      this.addSingleCard( this.creatures, $card);
       return;
     }
     if ($card.type.includes('Artifact')){
-      const filteredCard = this.artifacts.filter(value => value.name === $card.name)[0];
-      if (filteredCard){
-        filteredCard.quantity += 1;
-      } else {
-        this.artifacts.push($card);
-      }
+      this.addSingleCard( this.artifacts, $card);
       return;
     }
     if ($card.type.includes('Instant')){
-      const filteredCard = this.spells.filter(value => value.name === $card.name)[0];
-      if (filteredCard){
-        filteredCard.quantity += 1;
-      } else {
-        this.spells.push($card);
-      }
+      this.addSingleCard( this.spells, $card);
       return;
     }
     if ($card.type.includes('Enchantment')){
-      const filteredCard = this.enchantments.filter(value => value.name === $card.name)[0];
-      if (filteredCard){
-        filteredCard.quantity += 1;
-      } else {
-        this.enchantments.push($card);
-      }
+      this.addSingleCard( this.enchantments, $card);
       return;
     }
     if ($card.type.includes('Land')){
-      const filteredCard = this.lands.filter(value => value.name === $card.name)[0];
-      if (filteredCard){
-        filteredCard.quantity += 1;
-      } else {
-        this.lands.push($card);
-      }
+      this.addSingleCard( this.lands, $card);
       return;
     }
     if ($card.type.includes('Planeswalker')){
-      const filteredCard = this.planeswalkers.filter(value => value.name === $card.name)[0];
-      if (filteredCard){
-        filteredCard.quantity += 1;
-      } else {
-        this.planeswalkers.push($card);
-      }
+      this.addSingleCard( this.planeswalkers, $card);
       return;
     }
+  }
+
+  addSingleCard(cardArray, $card: Card){
+    const filteredCard = cardArray.filter(value => value.name === $card.name)[0];
+    if ($card.quantity <= 0 && filteredCard ){
+
+      for (let i = 0; i < cardArray.length; i++) {
+        if (cardArray[i].name === $card.name) {
+          cardArray.splice(i--, 1);
+          return;
+
+        }
+      }
+    }
+    if (filteredCard){
+      filteredCard.quantity = $card.quantity;
+    } else {
+      cardArray.push($card);
+    }
+    return;
   }
 }

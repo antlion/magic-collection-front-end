@@ -14,9 +14,10 @@
       </div>
     </div>
     <div class="col-md3">
-      <app-increment-input [card]="card" [value]="card.quantity|| 0" [step]="1"
+      <app-increment-input (changeCard)="onCardChange($event)" [card]="card" [value]="card.quantity|| 0" [step]="1"
                            [min]="0" [max]="30" [wrap]="true"></app-increment-input>
     </div>
   </div>
+  <br>
 </div>
 

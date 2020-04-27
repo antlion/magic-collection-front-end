@@ -8,6 +8,7 @@ import {Deck} from '../../models/deck.model';
 import { environment } from '../../../environments/environment';
 import {Observable, Subject} from 'rxjs';
 import {Card} from '../../models/card.model';
+import {Collection} from '../../models/collection.model';
 
 
 @Injectable({
@@ -54,5 +55,28 @@ export class DecksService {
       }),
       catchError(this.authService.handleError)
     );
+  }
+
+  saveNewCollection(collection: Collection) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/add`;
+    return this.http.post(api, collection).subscribe(
+      map((res: Response) => {
+        return res || {};
+      }),
+      catchError(this.authService.handleError)
+    );
+  }
+
+  getMyCollections(){
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/all`;
+    return this.http.get(api);
+  }
+
+  getCollection(id){
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/${id}`;
+    return this.http.get(api);
   }
 }

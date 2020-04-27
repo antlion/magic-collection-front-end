@@ -6,6 +6,8 @@ import {UserProfileComponent} from './components/user-profile/user-profile.compo
 import {AuthGuard} from './services/auth.guard';
 import {MyDeckComponent} from './components/my-deck/my-deck.component';
 import {ShowDeckComponent} from './components/show-deck/show-deck.component';
+import {MyCollectionsComponent} from './components/collections/my-collections/my-collections.component';
+import {CollectionComponent} from './components/collections/collection/collection.component';
 
 
 const routes: Routes = [
@@ -14,7 +16,9 @@ const routes: Routes = [
   { path: 'sign-up', component: SignupComponent },
   { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'my-decks', component: MyDeckComponent, canActivate: [AuthGuard] },
-  { path: 'my-decks/:id', component: ShowDeckComponent, canActivate: [AuthGuard] }
+  { path: 'my-decks/:id', component: ShowDeckComponent, canActivate: [AuthGuard] },
+  { path: 'my-collections', component: MyCollectionsComponent, canActivate: [AuthGuard] },
+  { path: 'my-collection/:id', component: CollectionComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

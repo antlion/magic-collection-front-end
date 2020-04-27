@@ -37,8 +37,13 @@ import {AlertComponent} from './components/alert/alert.component';
 import { ShowDeckComponent } from './components/show-deck/show-deck.component';
 import { AddCardComponent } from './dialog/add-card/add-card.component';
 import { CardComponent } from './components/card/card.component';
+import { CountCardsPipe } from './pipes/count-cards.pipe';
+import { MyCollectionsComponent } from './components/collections/my-collections/my-collections.component';
+import { CollectionComponent } from './components/collections/collection/collection.component';
+import { AddCollectionComponent } from './components/collections/add-collection/add-collection.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -62,29 +67,35 @@ import { CardComponent } from './components/card/card.component';
     AlertComponent,
     ShowDeckComponent,
     AddCardComponent,
-    CardComponent
+    CardComponent,
+    CountCardsPipe,
+    MyCollectionsComponent,
+    CollectionComponent,
+    AddCollectionComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatGridListModule,
-    FlexLayoutModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    FormsModule,
-    MatDialogModule,
-    SocialLoginModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        FlexLayoutModule,
+        MatListModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        FormsModule,
+        MatDialogModule,
+        SocialLoginModule,
+        ReactiveFormsModule,
+        MatSlideToggleModule,
+        NgbModule
+    ],
   providers: [MatDialog,
     {
       provide: HTTP_INTERCEPTORS,

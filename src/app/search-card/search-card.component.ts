@@ -19,9 +19,11 @@ export class SearchCardComponent implements OnInit {
   _max = Infinity;
   _wrap = false;
   color = 'default';
-  @Input()deck: Deck;
+  @Input() deck: Deck;
   @Input() event: any;
-  @Input()eventEmitter: EventEmitter<any>;
+  @Input() eventEmitter: EventEmitter<any>;
+  @Input() sideboard = false;
+  @Input() collection;
 
   constructor(private searchCardService: SearchCardService, private decksService: DecksService) {
 
@@ -55,18 +57,11 @@ export class SearchCardComponent implements OnInit {
   }
 
   createCards(data){
-    let cards: Array<Card> = [];
+    const cards: Array<Card> = [];
     for (const card of data){
-      let carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line, card.mana_cost, card.image_uris.png);
+      const carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line, card.mana_cost, card.image_uris.png);
       cards.push(carNew);
     }
     return cards;
-  }
-
-  onCardChange($card: Card) {
-
-    this.deck.addCardToDeck($card);
-    this.eventEmitter.emit($card);
-
   }
 }
