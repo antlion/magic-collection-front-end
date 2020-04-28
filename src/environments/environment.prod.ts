@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  endpoint: 'http://localhost:5000/api'
+  endpoint: 'https://magic-collection-back-end.herokuapp.com/api'
 };
