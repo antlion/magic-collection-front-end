@@ -22,12 +22,13 @@ export class CardComponent implements OnInit {
   }
 
   onCardChange($card: Card) {
-    console.log('or222')
     if (this.deck) {
       this.deck.addCardToDeck($card, this.sideboard);
       this.decksService.saveDeck(this.deck);
     } else {
+      console.log(111)
       this.collection.addCard($card);
+      this.decksService.saveCollection(this.collection);
     }
 
   }

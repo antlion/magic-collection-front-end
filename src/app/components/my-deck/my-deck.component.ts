@@ -3,6 +3,7 @@ import {Deck} from '../../models/deck.model';
 import {MatDialog} from '@angular/material/dialog';
 import {AddDeckComponent} from '../../add-deck/add-deck.component';
 import {DecksService} from '../../services/decks/decks.service';
+import {catchError, map} from 'rxjs/operators';
 
 
 
@@ -39,6 +40,21 @@ export class MyDeckComponent implements OnInit {
       this.decksService.addDeck(result);
       this.myDeck.push(result);
     });
+  }
+
+  deleteDeck(deck: Deck) {
+    console.log('aaaa')
+    this.decksService.deleteDeck(deck).subscribe(
+      map((res: Response) => {
+        for (let i = 0; i < this.myDeck.length; i++) {
+          if (this.myDeck[i].id === deck.id) {
+            this.myDeck.splice(i--, 1);
+            return;
+
+          }
+        }
+      }),
+    );
   }
 }
 

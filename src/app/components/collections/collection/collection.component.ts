@@ -18,7 +18,7 @@ export class CollectionComponent implements OnInit {
     const idDeck = this.actRoute.snapshot.paramMap.get('id');
 
     this.decksService.getCollection(idDeck).subscribe((data: any[]) => {
-      this.collection = new Collection( data['data']['name'],data['data']['wishList'], data['data']['cardList'] );
+      this.collection = new Collection( data['data']['name'],data['data']['wishList'], data['data']['cardList'],data['data']['_id'] );
     });
   }
 
@@ -37,6 +37,7 @@ export class CollectionComponent implements OnInit {
     });
 
     const sub = dialogRef.componentInstance.onAdd.subscribe((data) => {
+      console.log('card added collection')
       //this.decksService.saveDeck(this.deck);
     });
 

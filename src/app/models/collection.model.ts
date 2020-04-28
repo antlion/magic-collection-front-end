@@ -7,10 +7,11 @@ export class Collection {
   cardList: Card[] = [];
 
 
-  constructor(name: string, wishList: boolean = false, cardList: Card[] = []) {
+  constructor(name: string, wishList: boolean = false, cardList: Card[] = [], id = '') {
     this.name = name;
     this.wishList = wishList;
     this.cardList = cardList;
+    this.id = id;
   }
 
   addCard($card){
