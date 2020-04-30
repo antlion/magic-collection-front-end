@@ -44,6 +44,7 @@ import { AddCollectionComponent } from './components/collections/add-collection/
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatMenuModule} from "@angular/material/menu";
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -94,7 +95,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         SocialLoginModule,
         ReactiveFormsModule,
         MatSlideToggleModule,
-        NgbModule
+        NgbModule,
+        MatMenuModule
     ],
   providers: [MatDialog,
     {

@@ -1,4 +1,5 @@
 import {Card} from './card.model';
+import {DecksService} from "../services/decks/decks.service";
 
 export class Deck {
   id: string;
@@ -64,7 +65,6 @@ export class Deck {
         if (cardArray[i].name === $card.name) {
           cardArray.splice(i--, 1);
           return;
-
         }
       }
     }
@@ -75,4 +75,27 @@ export class Deck {
     }
     return;
   }
+
+
+  findCardsCollections(decksService: DecksService){
+    this.findCardCollections(this.creatures, decksService);
+    this.findCardCollections(this.artifacts, decksService);
+    this.findCardCollections(this.spells, decksService);
+    this.findCardCollections(this.enchantments, decksService);
+    this.findCardCollections(this.planeswalkers, decksService);
+    this.findCardCollections(this.lands, decksService);
+    this.findCardCollections(this.sideboard, decksService);
+  }
+
+  findCardCollections(cardArray: Card[], decksService){
+    for (let i = 0; i < cardArray.length; i++) {
+        decksService.getCardByName(cardArray[i].name).subscribe((value: Array<any>) => {
+          if (value.length > 0) {
+            cardArray[i].inCollection = true;
+            cardArray[i].quantityCollection = value[0].cardList[0]['quantity'];
+          }
+        });
+      }
+  }
+
 }

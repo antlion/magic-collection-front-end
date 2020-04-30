@@ -1,2 +1,4 @@
 a>div { display: none; }
-a:hover>div { display: block; }
+a:hover>div { display: block; position: relative; margin: 0 auto;
+  width: 13.5em;
+  height: 20.5em; }

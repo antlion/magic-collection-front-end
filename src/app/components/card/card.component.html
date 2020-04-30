@@ -3,14 +3,26 @@
     <div class="col-md-3">
 
       <a>
-        <img src="{{card.avatar}}" class="avatar" style="max-width: 5rem; max-height: 4rem;border-radius: 0.5rem">
-        <div><img src="{{card.png}}" style="max-width: 15rem"/></div>
+        <img src="{{card.avatar}}" class="avatar" style="max-width: 3rem; max-height: 3rem;border-radius: 0.5rem">
+        <div style="z-index: 10000"><img src="{{card.png}}" style="max-width: 15rem"/></div>
       </a>
     </div>
     <div class="col-md-6">
       <div class="card-body" style="padding: 0px!important;">
-        <p class="card-title">{{card.name}}</p>
-        <p class="card-text" [innerHTML]="card.manaCost"></p>
+        <h4 class='mat-subheading-1' style="margin-bottom: -5px">{{card.name}}</h4>
+        <p style="margin-bottom: -5px" [innerHTML]="card.manaCost"></p>
+        <span *ngIf="card.inCollection && deck" class="badge badge-info badge-pill">
+          Collection: {{card.quantityCollection}}
+          </span>
+        <button *ngIf="!card.inCollection && deck" class="badge badge-danger badge-pill"
+                (click)="addCardsCollection(card, card.quantity, 0)">
+          Add Collection {{card.quantity}}
+        </button>
+        <button *ngIf="card.inCollection && card.quantityCollection - card.quantity   < 0 && deck"
+                (click)="addCardsCollection(card, card.quantity - card.quantityCollection, card.quantityCollection)"
+                class="badge badge-danger badge-pill">
+          Add Collection {{card.quantity - card.quantityCollection }}
+        </button>
       </div>
     </div>
     <div class="col-md3">

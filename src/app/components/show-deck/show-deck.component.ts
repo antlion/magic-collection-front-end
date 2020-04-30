@@ -4,6 +4,9 @@ import {DecksService} from '../../services/decks/decks.service';
 import {Deck} from '../../models/deck.model';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCardComponent} from '../../dialog/add-card/add-card.component';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {SearchCardService} from "../../services/search-card.service";
+import {Card} from "../../models/card.model";
 
 @Component({
   selector: 'app-show-deck',
@@ -14,17 +17,18 @@ import {AddCardComponent} from '../../dialog/add-card/add-card.component';
 export class ShowDeckComponent implements OnInit {
 
   deck: Deck = new Deck('new-deck');
+  importCardsList: any;
 
   constructor(private actRoute: ActivatedRoute, private decksService: DecksService,
-              private cdRef: ChangeDetectorRef, public dialog: MatDialog) {
-
+              private cdRef: ChangeDetectorRef, public dialog: MatDialog,
+              private modalService: NgbModal,
+              private searchCardService: SearchCardService) {
   }
 
   ngOnInit(): void {
     const idDeck = this.actRoute.snapshot.paramMap.get('id');
 
     this.decksService.getDeck(idDeck).subscribe((data: Object[]) => {
-      console.log(133);
       const {planeswalkers, enchantments, spells, _id, creatures, lands, name, artifacts, sideboard} = data['data'];
       this.deck.name = name;
       this.deck.creatures = creatures;
@@ -35,6 +39,7 @@ export class ShowDeckComponent implements OnInit {
       this.deck.lands = lands;
       this.deck.sideboard = sideboard;
       this.deck.id = _id;
+      this.deck.findCardsCollections(this.decksService)
     });
   }
 
@@ -54,6 +59,50 @@ export class ShowDeckComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  importCards(content) {
+    const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      if (result === 'Import'){
+        let sideboard = false
+
+        var splitted = this.importCardsList.split("\n");
+        splitted.forEach((item, index) => {
+          console.log(item[0])
+          console.log(item.substring(2,item.length))
+          if (item[0] == undefined){
+            sideboard = true;
+          }
+
+          this.searchCardService.get_card_by_name(item.substring(2,item.length)).subscribe((data) => {
+            console.log(data);
+            let carNew;
+            if (data['object'] === 'list'){
+              carNew = new Card(data['data'][0].name, data['data'][0].set,
+                data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
+                data['data'][0].mana_cost, data['data'][0].image_uris.png);
+            }else{
+              carNew = new Card(data['object'][0].name, data['object'][0].set,
+                data['object'][0].image_uris.art_crop, +item[0], data['object'][0].type_line,
+                data['object'][0].mana_cost, data['object'][0].image_uris.png);
+            }
+            if(!sideboard){
+              this.deck.addCardToDeck(carNew);
+              this.decksService.saveDeck(this.deck);
+            } else {
+              this.deck.addCardToDeck(carNew, true);
+              this.decksService.saveDeck(this.deck);
+            }
+          });
+
+
+
+
+        });
+      }
+    }, (reason) => {
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 }

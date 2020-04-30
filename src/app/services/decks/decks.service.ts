@@ -31,12 +31,7 @@ export class DecksService {
   addDeck(deck: Deck){
     const localToken = this.authService.getDecodedAccessToken();
     const api = `${environment.endpoint}/my-decks/${localToken.userId}/add`;
-    return this.http.post(api, deck).subscribe(
-      map((res: Response) => {
-        return res || {};
-      }),
-      catchError(this.authService.handleError)
-    );
+    return this.http.post(api, deck);
   }
 
   getDeck(idDeck: string) {
@@ -95,5 +90,18 @@ export class DecksService {
     const localToken = this.authService.getDecodedAccessToken();
     const api = `${environment.endpoint}/my-decks/${localToken.userId}/${myDeck._id}/delete`;
     return this.http.get(api);
+  }
+
+  getCardByName(name: any) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/search/${name}`;
+    return this.http.get(api);
+
+  }
+
+  addCardToDefaultCollection(card: Card) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/default`;
+    return this.http.post(api, card);
   }
 }

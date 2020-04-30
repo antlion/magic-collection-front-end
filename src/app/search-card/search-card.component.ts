@@ -57,10 +57,23 @@ export class SearchCardComponent implements OnInit {
   }
 
   createCards(data){
+
+
     const cards: Array<Card> = [];
     for (const card of data){
-      const carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line, card.mana_cost, card.image_uris.png);
-      cards.push(carNew);
+      this.decksService.getCardByName(card.name).subscribe((value: Array<any>) => {
+        let carNew;
+        if (value.length > 0) {
+           carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line,
+            card.mana_cost, card.image_uris.png, true, value[0].cardList[0]['quantity']);
+
+        } else {
+           carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line,
+            card.mana_cost, card.image_uris.png)
+        }
+        cards.push(carNew);
+
+      })
     }
     return cards;
   }

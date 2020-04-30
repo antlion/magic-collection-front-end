@@ -7,7 +7,9 @@
       (deck.lands | countCards) +
       (deck.enchantments | countCards) +
       (deck.artifacts | countCards)
-      }}</li>
+      }}
+      <button mat-raised-button color="primary" (click)="importCards(mymodal)">Import Cards</button>
+    </li>
   </ol>
 </nav>
 
@@ -22,7 +24,7 @@
   </div>
 
   <div class="row">
-    <div class="col" *ngIf="deck.creatures.length >= 1">
+    <div class="col-4" *ngIf="deck.creatures.length >= 1">
       <h3>Creatures <span class="badge badge-light">{{deck.creatures | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.creatures" [deck]="deck"></app-card>
@@ -33,17 +35,17 @@
         <app-card [cards]="deck.planeswalkers" [deck]="deck"></app-card>
       </div>
     </div>
-    <div class="col" *ngIf="deck.spells.length >= 1">
+    <div class="col-4" *ngIf="deck.spells.length >= 1">
       <h3>Spells <span class="badge badge-light">{{deck.spells | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.spells" [deck]="deck"></app-card>
     </div>
-    <div class="col" *ngIf="deck.artifacts.length >= 1">
+    <div class="col-4" *ngIf="deck.artifacts.length >= 1">
       <h3>Artifacts <span class="badge badge-light">{{deck.artifacts | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.artifacts" [deck]="deck"></app-card>
     </div>
-    <div class="col" *ngIf="deck.enchantments.length >= 1">
+    <div class="col-4" *ngIf="deck.enchantments.length >= 1">
       <h3>Enchantments <span class="badge badge-light">{{deck.enchantments | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.enchantments" [deck]="deck"></app-card>
@@ -75,3 +77,25 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Import Cards</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <textarea required="required" [(ngModel)]="importCardsList"
+                  class="form-control" placeholder="Name" [ngModelOptions]="{standalone: true}">
+        </textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Import')">Import</button>
+  </div>
+</ng-template>

@@ -37,23 +37,27 @@ export class MyDeckComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       // add deck
-      this.decksService.addDeck(result);
+      this.decksService.addDeck(result).subscribe(value => {
+        console.log('deck new')
+        if (value && 'result' in value) {
+          result._id = value['result']['_id']
+        }
+      })
       this.myDeck.push(result);
     });
   }
 
   deleteDeck(deck: Deck) {
     console.log('aaaa')
-    this.decksService.deleteDeck(deck).subscribe(
-      map((res: Response) => {
-        for (let i = 0; i < this.myDeck.length; i++) {
-          if (this.myDeck[i].id === deck.id) {
-            this.myDeck.splice(i--, 1);
-            return;
+    this.decksService.deleteDeck(deck).subscribe( value => {
 
-          }
-        }
-      }),
+      this.myDeck.forEach( (item, index) => {
+        if(item['_id'] === value['data']._id)  this.myDeck.splice(index,1);
+      });
+
+
+      }
+
     );
   }
 }

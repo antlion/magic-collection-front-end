@@ -32,4 +32,16 @@ export class CardComponent implements OnInit {
     }
 
   }
+
+  addCardsCollection(card: Card, number: number, numberCollection = 0) {
+    console.log('addtocollection')
+    card.quantity = number
+    card['quantityCol'] = number + numberCollection
+    this.decksService.addCardToDefaultCollection(card).subscribe(value => {
+      if (value == true || '_id' in value){
+        card.inCollection = true
+        card.quantityCollection = number + numberCollection;
+      }
+    })
+  }
 }
