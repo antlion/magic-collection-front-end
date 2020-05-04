@@ -13,4 +13,8 @@ export class SearchCardService {
   public get_card_by_name(card_name:string){
     return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/search?q="+card_name);
   }
+
+  public get_card_by_exact_name(card_name:string){
+    return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/named?exact="+card_name);
+  }
 }

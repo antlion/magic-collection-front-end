@@ -27,33 +27,33 @@
     <div class="col-4" *ngIf="deck.creatures.length >= 1">
       <h3>Creatures <span class="badge badge-light">{{deck.creatures | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.creatures" [deck]="deck"></app-card>
+      <app-card [cards]="deck.creatures" [deck]="deck" [collections]="collections"></app-card>
 
       <div *ngIf="deck.planeswalkers.length >=1">
         <h3>PlaneSwlaker <span class="badge badge-light">{{deck.planeswalkers | countCards}}</span></h3>
         <hr>
-        <app-card [cards]="deck.planeswalkers" [deck]="deck"></app-card>
+        <app-card [cards]="deck.planeswalkers" [deck]="deck" [collections]="collections"></app-card>
       </div>
     </div>
     <div class="col-4" *ngIf="deck.spells.length >= 1">
       <h3>Spells <span class="badge badge-light">{{deck.spells | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.spells" [deck]="deck"></app-card>
+      <app-card [cards]="deck.spells" [deck]="deck" [collections]="collections"></app-card>
     </div>
     <div class="col-4" *ngIf="deck.artifacts.length >= 1">
       <h3>Artifacts <span class="badge badge-light">{{deck.artifacts | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.artifacts" [deck]="deck"></app-card>
+      <app-card [cards]="deck.artifacts" [deck]="deck" [collections]="collections"></app-card>
     </div>
     <div class="col-4" *ngIf="deck.enchantments.length >= 1">
       <h3>Enchantments <span class="badge badge-light">{{deck.enchantments | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.enchantments" [deck]="deck"></app-card>
+      <app-card [cards]="deck.enchantments" [deck]="deck" [collections]="collections"></app-card>
     </div>
     <div class="col" *ngIf="deck.lands.length >= 1">
       <h3>Lands <span class="badge badge-light">{{deck.lands | countCards}}</span></h3>
       <hr>
-      <app-card [cards]="deck.lands" [deck]="deck"></app-card>
+      <app-card [cards]="deck.lands" [deck]="deck" [collections]="collections"></app-card>
     </div>
 
 

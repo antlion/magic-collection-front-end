@@ -39,7 +39,7 @@ export class Deck {
       this.addSingleCard( this.artifacts, $card);
       return;
     }
-    if ($card.type.includes('Instant')){
+    if ($card.type.includes('Instant') || $card.type.includes('Sorcery')){
       this.addSingleCard( this.spells, $card);
       return;
     }

@@ -15,8 +15,15 @@ export class CardComponent implements OnInit {
   @Input() sideboard;
   @Input() collection: Collection;
 
+  @Input() collections:Collection[];
 
-  constructor(private decksService: DecksService) { }
+  constructor(private decksService: DecksService) {
+
+
+   }
+
+
+
 
   ngOnInit(): void {
   }

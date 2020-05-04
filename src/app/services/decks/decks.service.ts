@@ -63,9 +63,9 @@ export class DecksService {
     );
   }
 
-  getMyCollections(){
+  getMyCollections(withCard:boolean = true){
     const localToken = this.authService.getDecodedAccessToken();
-    const api = `${environment.endpoint}/my-collection/${localToken.userId}/all`;
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/all/${withCard}`;
     return this.http.get(api);
   }
 

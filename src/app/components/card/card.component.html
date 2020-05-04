@@ -1,13 +1,12 @@
-<div class="card" style="max-width: 500px;max-height: 80px; border: 0px!important;" *ngFor="let card of cards">
-  <div class="row no-gutters">
-    <div class="col-md-3">
-
+<div class="card" style="border: 0px!important;" *ngFor="let card of cards">
+  <div class="row">
+    <div class="col-md-2">
       <a>
         <img src="{{card.avatar}}" class="avatar" style="max-width: 3rem; max-height: 3rem;border-radius: 0.5rem">
         <div style="z-index: 10000"><img src="{{card.png}}" style="max-width: 15rem"/></div>
       </a>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="card-body" style="padding: 0px!important;">
         <h4 class='mat-subheading-1' style="margin-bottom: -5px">{{card.name}}</h4>
         <p style="margin-bottom: -5px" [innerHTML]="card.manaCost"></p>
@@ -18,6 +17,9 @@
                 (click)="addCardsCollection(card, card.quantity, 0)">
           Add Collection {{card.quantity}}
         </button>
+<!--        <select *ngIf="!card.inCollection && deck">-->
+<!--          <option *ngFor="let collection of collections">{{collection.name}}</option>-->
+<!--        </select>-->
         <button *ngIf="card.inCollection && card.quantityCollection - card.quantity   < 0 && deck"
                 (click)="addCardsCollection(card, card.quantity - card.quantityCollection, card.quantityCollection)"
                 class="badge badge-danger badge-pill">
@@ -29,7 +31,7 @@
       <app-increment-input (changeCard)="onCardChange($event)" [card]="card" [value]="card.quantity|| 0" [step]="1"
                            [min]="0" [max]="30" [wrap]="true"></app-increment-input>
     </div>
+
   </div>
-  <br>
 </div>
 

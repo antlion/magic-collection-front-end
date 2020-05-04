@@ -38,5 +38,9 @@ export class Card {
     this.manaCost = this.manaCost.split('{1}').join('<i class="mi mi-1 mi-mana mi-shadow"></i>');
     this.manaCost = this.manaCost.split('{2}').join('<i class="mi mi-2 mi-mana mi-shadow"></i>');
     this.manaCost = this.manaCost.split('{3}').join('<i class="mi mi-3 mi-mana mi-shadow"></i>');
+    this.manaCost = this.manaCost.split('{4}').join('<i class="mi mi-4 mi-mana mi-shadow"></i>');
+    this.manaCost = this.manaCost.split('{5}').join('<i class="mi mi-5 mi-mana mi-shadow"></i>');
+
+
   }
 }

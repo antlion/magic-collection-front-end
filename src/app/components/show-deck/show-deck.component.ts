@@ -7,6 +7,7 @@ import {AddCardComponent} from '../../dialog/add-card/add-card.component';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SearchCardService} from "../../services/search-card.service";
 import {Card} from "../../models/card.model";
+import {Collection} from "../../models/collection.model";
 
 @Component({
   selector: 'app-show-deck',
@@ -19,10 +20,15 @@ export class ShowDeckComponent implements OnInit {
   deck: Deck = new Deck('new-deck');
   importCardsList: any;
 
+  collections: Collection[];
+
   constructor(private actRoute: ActivatedRoute, private decksService: DecksService,
               private cdRef: ChangeDetectorRef, public dialog: MatDialog,
               private modalService: NgbModal,
               private searchCardService: SearchCardService) {
+    this.decksService.getMyCollections(false).subscribe(data => {
+      this.collections = data['data'];
+    });
   }
 
   ngOnInit(): void {
@@ -65,7 +71,9 @@ export class ShowDeckComponent implements OnInit {
   importCards(content) {
     const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       if (result === 'Import'){
-        let sideboard = false
+        let cardDeck = []
+        let sidebaordDeck = []
+        let sideboard= false
 
         var splitted = this.importCardsList.split("\n");
         splitted.forEach((item, index) => {
@@ -73,9 +81,17 @@ export class ShowDeckComponent implements OnInit {
           console.log(item.substring(2,item.length))
           if (item[0] == undefined){
             sideboard = true;
+            return;
           }
+          if (sideboard){
+            sidebaordDeck.push([item[0],item.substring(2,item.length)])
+          } else {
+            cardDeck.push([item[0],item.substring(2,item.length)])
+          }
+        });
 
-          this.searchCardService.get_card_by_name(item.substring(2,item.length)).subscribe((data) => {
+        cardDeck.forEach((item, index) => {
+          this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
             console.log(data);
             let carNew;
             if (data['object'] === 'list'){
@@ -83,23 +99,33 @@ export class ShowDeckComponent implements OnInit {
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
                 data['data'][0].mana_cost, data['data'][0].image_uris.png);
             }else{
-              carNew = new Card(data['object'][0].name, data['object'][0].set,
-                data['object'][0].image_uris.art_crop, +item[0], data['object'][0].type_line,
-                data['object'][0].mana_cost, data['object'][0].image_uris.png);
+              carNew = new Card(data['name'], data['set'],
+                data['image_uris'].art_crop, +item[0], data['type_line'],
+                data['mana_cost'], data['image_uris'].png);
             }
-            if(!sideboard){
-              this.deck.addCardToDeck(carNew);
-              this.decksService.saveDeck(this.deck);
-            } else {
-              this.deck.addCardToDeck(carNew, true);
-              this.decksService.saveDeck(this.deck);
-            }
+            this.deck.addCardToDeck(carNew);
+            this.decksService.saveDeck(this.deck);
           });
+        })
 
+        sidebaordDeck.forEach((item, index) => {
+          this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
+            console.log(data);
+            let carNew;
+            if (data['object'] === 'list'){
+              carNew = new Card(data['data'][0].name, data['data'][0].set,
+                data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
+                data['data'][0].mana_cost, data['data'][0].image_uris.png);
+            }else{
+              carNew = new Card(data['name'], data['set'],
+                data['image_uris'].art_crop, +item[0], data['type_line'],
+                data['mana_cost'], data['image_uris'].png);
+            }
+            this.deck.addCardToDeck(carNew, true);
+            this.decksService.saveDeck(this.deck);
+          });
+        })
 
-
-
-        });
       }
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

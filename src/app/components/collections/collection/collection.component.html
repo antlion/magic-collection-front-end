@@ -1,6 +1,8 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">My collection {{collection.name}}
+      Total Card: {{collection.cardList | countCards}}
+      <button mat-raised-button color="primary" (click)="importCards(mymodal)">Import Cards</button>
     </li>
   </ol>
 </nav>
@@ -26,3 +28,24 @@
     </div>
   </div>
 </div>
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Import Cards</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <textarea required="required" [(ngModel)]="importCardsList"
+                  class="form-control" placeholder="Name" [ngModelOptions]="{standalone: true}">
+        </textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Import')">Import</button>
+  </div>
+</ng-template>
