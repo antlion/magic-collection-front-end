@@ -14,7 +14,7 @@ export class CardComponent implements OnInit {
   @Input() deck;
   @Input() sideboard;
   @Input() collection: Collection;
-
+  @Input() todeck;
   @Input() collections:Collection[];
 
   constructor(private decksService: DecksService) {
@@ -29,6 +29,12 @@ export class CardComponent implements OnInit {
   }
 
   onCardChange($card: Card) {
+    console.log(this.todeck);
+    if(this.todeck == 'mayboard'){
+      this.deck.addCardToDeck($card, false, true);
+      this.decksService.saveDeck(this.deck);
+      return;
+    }
     if (this.deck) {
       this.deck.addCardToDeck($card, this.sideboard);
       this.decksService.saveDeck(this.deck);

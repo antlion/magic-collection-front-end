@@ -64,18 +64,46 @@
       <h2> Sideboard
         <button class="btn btn-sm btn-primary" (click)="addCard()">Add Card</button>
       </h2>
+      <div *ngIf="deck.sideboard.length >= 1">
+        <h3>Sideboard <span class="badge badge-light">{{deck.sideboard | countCards}}</span></h3>
+        <hr>
+        <app-card [cards]="deck.sideboard" [deck]="deck"></app-card>
+      </div>
+    </div>
+
+    <div class="col">
+      <h2> MayBoard
+        <button class="btn btn-sm btn-primary" (click)="addCard('mayboard')">Add Card</button>
+      </h2>
+      <div *ngIf="deck.mayboard.length >= 1">
+        <h3>Sideboard <span class="badge badge-light">{{deck.mayboard | countCards}}</span></h3>
+        <hr>
+        <app-card [cards]="deck.mayboard" [deck]="deck" [todeck]="'mayboard'"></app-card>
+
+      </div>
     </div>
 
   </div>
 
-  <div class="row">
-    <div class="col" *ngIf="deck.sideboard.length >= 1">
-      <h3>Sideboard <span class="badge badge-light">{{deck.sideboard | countCards}}</span></h3>
-      <hr>
-      <app-card [cards]="deck.sideboard" [deck]="deck"></app-card>
+<!--  <div class="row">-->
+<!--    <div class="col" *ngIf="deck.sideboard.length >= 1">-->
+<!--      <h3>Sideboard <span class="badge badge-light">{{deck.sideboard | countCards}}</span></h3>-->
+<!--      <hr>-->
+<!--      <app-card [cards]="deck.sideboard" [deck]="deck"></app-card>-->
+<!--    </div>-->
+<!--  </div>-->
 
-    </div>
-  </div>
+<!--  <div class="row">-->
+<!--    <div class="col">-->
+<!--      <h2> MayBoard-->
+<!--        <button class="btn btn-sm btn-primary" (click)="addCard('mayboard')">Add Card</button>-->
+<!--      </h2>-->
+<!--    </div>-->
+
+<!--  </div>-->
+
+
+
 </div>
 
 

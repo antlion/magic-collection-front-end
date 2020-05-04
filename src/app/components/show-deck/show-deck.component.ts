@@ -35,7 +35,7 @@ export class ShowDeckComponent implements OnInit {
     const idDeck = this.actRoute.snapshot.paramMap.get('id');
 
     this.decksService.getDeck(idDeck).subscribe((data: Object[]) => {
-      const {planeswalkers, enchantments, spells, _id, creatures, lands, name, artifacts, sideboard} = data['data'];
+      const {planeswalkers, enchantments, spells, _id, creatures, lands, name, artifacts, sideboard, mayboard} = data['data'];
       this.deck.name = name;
       this.deck.creatures = creatures;
       this.deck.artifacts = artifacts;
@@ -44,19 +44,21 @@ export class ShowDeckComponent implements OnInit {
       this.deck.spells = spells;
       this.deck.lands = lands;
       this.deck.sideboard = sideboard;
+      this.deck.mayboard = mayboard;
       this.deck.id = _id;
       this.deck.findCardsCollections(this.decksService)
     });
   }
 
 
-  addCard() {
+  addCard(toDeck= '') {
     const dialogRef = this.dialog.open(AddCardComponent, {
       width: '600px',
       data: {
         deck: this.deck,
         saveToDB: true,
-        sideboard: true
+        sideboard: true,
+        todeck: toDeck
       }
     });
 

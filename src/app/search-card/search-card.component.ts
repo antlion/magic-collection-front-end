@@ -24,6 +24,7 @@ export class SearchCardComponent implements OnInit {
   @Input() eventEmitter: EventEmitter<any>;
   @Input() sideboard = false;
   @Input() collection;
+  @Input() todeck;
 
   constructor(private searchCardService: SearchCardService, private decksService: DecksService) {
 

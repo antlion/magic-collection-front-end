@@ -12,6 +12,7 @@ export class Deck {
   spells: Card[] = [];
   lands: Card[] = [];
   sideboard: Card[] = [];
+  mayboard: Card[] = [];
 
 
   constructor(name: string) {
@@ -23,10 +24,15 @@ export class Deck {
     this.spells = [];
     this.lands = [];
     this.sideboard = [];
+    this.mayboard = [];
 
   }
 
-  addCardToDeck($card: Card, sideboard = false){
+  addCardToDeck($card: Card, sideboard = false, mayboard = false){
+    if (mayboard) {
+      this.addSingleCard(this.mayboard, $card);
+      return;
+    }
     if (sideboard) {
       this.addSingleCard(this.sideboard, $card);
       return;
@@ -85,6 +91,7 @@ export class Deck {
     this.findCardCollections(this.planeswalkers, decksService);
     this.findCardCollections(this.lands, decksService);
     this.findCardCollections(this.sideboard, decksService);
+    this.findCardCollections(this.mayboard, decksService);
   }
 
   findCardCollections(cardArray: Card[], decksService){
