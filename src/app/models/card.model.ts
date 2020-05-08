@@ -8,6 +8,8 @@ export class Card {
   png;
   inCollection:boolean = false
   quantityCollection: number = 0
+  inWishList: boolean;
+  quantityCollectionWishList: number = 0;
 
 
   constructor(name: string, edition: string, avatar: string, quantity: number, type: string, manaCost: string, png:string,
@@ -33,6 +35,8 @@ export class Card {
     this.manaCost = this.manaCost.split('{U}').join('<i class="mi mi-u mi-mana mi-shadow"></i>');
     this.manaCost = this.manaCost.split('{W/B}').
     join('<span class="mi-split mi-shadow"><i class="mi mi-w"></i><i class="mi mi-b"></i></span>\n');
+    this.manaCost = this.manaCost.split('{W/U}').
+    join('<span class="mi-split mi-shadow"><i class="mi mi-w"></i><i class="mi mi-u"></i></span>\n');
 
     this.manaCost = this.manaCost.split('{0}').join('<i class="mi mi-0 mi-mana mi-shadow"></i>');
     this.manaCost = this.manaCost.split('{1}').join('<i class="mi mi-1 mi-mana mi-shadow"></i>');

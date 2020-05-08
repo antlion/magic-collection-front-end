@@ -17,3 +17,18 @@ export class CountCardsPipe implements PipeTransform {
 }
 
 
+@Pipe({
+  name: 'countCardsPrice'
+})
+export class CountCardsPrice implements PipeTransform {
+
+  transform(array: Card[]): number {
+    let count = 0;
+    for (let i = 0; i < array.length; i++){
+      count += array[i]['price'] * array[i].quantity;
+    }
+    return count;
+  }
+
+}
+

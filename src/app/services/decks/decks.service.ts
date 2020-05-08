@@ -92,9 +92,12 @@ export class DecksService {
     return this.http.get(api);
   }
 
-  getCardByName(name: any) {
+  getCardByName(name: any, wishList = false) {
     const localToken = this.authService.getDecodedAccessToken();
-    const api = `${environment.endpoint}/my-collection/${localToken.userId}/search/${name}`;
+    if (name.indexOf("//") > -1) {
+      name = name.replace("//", '$$')
+    }
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/search/${name}/${wishList}`;
     return this.http.get(api);
 
   }
@@ -103,5 +106,9 @@ export class DecksService {
     const localToken = this.authService.getDecodedAccessToken();
     const api = `${environment.endpoint}/my-collection/${localToken.userId}/default`;
     return this.http.post(api, card);
+  }
+
+  findCardPrice(name: any) {
+
   }
 }

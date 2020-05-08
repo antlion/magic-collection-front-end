@@ -37,7 +37,7 @@ import {AlertComponent} from './components/alert/alert.component';
 import { ShowDeckComponent } from './components/show-deck/show-deck.component';
 import { AddCardComponent } from './dialog/add-card/add-card.component';
 import { CardComponent } from './components/card/card.component';
-import { CountCardsPipe } from './pipes/count-cards.pipe';
+import {CountCardsPipe, CountCardsPrice} from './pipes/count-cards.pipe';
 import { MyCollectionsComponent } from './components/collections/my-collections/my-collections.component';
 import { CollectionComponent } from './components/collections/collection/collection.component';
 import { AddCollectionComponent } from './components/collections/add-collection/add-collection.component';
@@ -45,6 +45,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatMenuModule} from "@angular/material/menu";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TableCardComponent } from './components/show-deck/table-card/table-card.component';
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -72,7 +74,9 @@ import {MatMenuModule} from "@angular/material/menu";
     CountCardsPipe,
     MyCollectionsComponent,
     CollectionComponent,
-    AddCollectionComponent
+    AddCollectionComponent,
+    CountCardsPrice,
+    TableCardComponent
   ],
     imports: [
         BrowserModule,
@@ -96,7 +100,8 @@ import {MatMenuModule} from "@angular/material/menu";
         ReactiveFormsModule,
         MatSlideToggleModule,
         NgbModule,
-        MatMenuModule
+        MatMenuModule,
+        FontAwesomeModule
     ],
   providers: [MatDialog,
     {

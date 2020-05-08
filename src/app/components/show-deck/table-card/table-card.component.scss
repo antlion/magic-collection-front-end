@@ -1,6 +1,3 @@
-a>div { display: none; }
-a:hover>div { display: block; z-index: 1000 }
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -25,22 +22,3 @@ a img.only-show-on-hover {
 a:hover img.only-show-on-hover  {
   visibility: visible;
 }
-
-/*
-table td {
-  position: relative;
-}
-
-table td input {
-  position: absolute;
-  display: block;
-  top:0;
-  left:0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  border: none;
-  padding: 10px;
-  box-sizing: border-box;
-}
-*/

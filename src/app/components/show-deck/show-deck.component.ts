@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DecksService} from '../../services/decks/decks.service';
 import {Deck} from '../../models/deck.model';
@@ -8,6 +8,9 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SearchCardService} from "../../services/search-card.service";
 import {Card} from "../../models/card.model";
 import {Collection} from "../../models/collection.model";
+
+declare var $: any;
+
 
 @Component({
   selector: 'app-show-deck',
@@ -21,6 +24,7 @@ export class ShowDeckComponent implements OnInit {
   importCardsList: any;
 
   collections: Collection[];
+  tableView: boolean = true;
 
   constructor(private actRoute: ActivatedRoute, private decksService: DecksService,
               private cdRef: ChangeDetectorRef, public dialog: MatDialog,
@@ -28,6 +32,7 @@ export class ShowDeckComponent implements OnInit {
               private searchCardService: SearchCardService) {
     this.decksService.getMyCollections(false).subscribe(data => {
       this.collections = data['data'];
+
     });
   }
 
@@ -45,8 +50,10 @@ export class ShowDeckComponent implements OnInit {
       this.deck.lands = lands;
       this.deck.sideboard = sideboard;
       this.deck.mayboard = mayboard;
+      this.deck.findPrices(this.searchCardService);
       this.deck.id = _id;
       this.deck.findCardsCollections(this.decksService)
+      this.deck.findCardsCollections(this.decksService, true)
     });
   }
 
@@ -132,5 +139,21 @@ export class ShowDeckComponent implements OnInit {
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  showImage($event: MouseEvent) {
+    (document.querySelector('.app-alerts') as HTMLElement).style.top = '150px';
+
+  }
+
+  @Input()
+  set ready(isReady: boolean) {
+    if (isReady){
+      $(".preview").hover(function(){
+        $(this).find('img').show();
+      }, function(){
+        $(this).find('img').hide();
+      });
+    }
   }
 }

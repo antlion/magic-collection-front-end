@@ -1,0 +1,15 @@
+<tr>
+  <td class="table-active" colspan="7" *ngIf="cards.length > 0">{{name}}
+    <span class="badge badge-primary">{{cards | countCards}}</span></td>
+</tr>
+<tr *ngFor="let card of cards">
+  <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
+  <td><input type="number" style="width: 1.5rem"/></td>
+  <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+  <td><a href="#" class="preview ">{{card.name}}
+    <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+  </a></td>
+  <td>{{card.type}}</td>
+  <td [innerHTML]="card.manaCost"></td>
+  <td>{{card.price * card.quantity}} &euro;</td>
+</tr>
