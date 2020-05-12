@@ -1,4 +1,5 @@
 import {Card} from './card.model';
+import {SearchCardService} from "../services/search-card.service";
 
 export class Collection {
   id: string;
@@ -31,5 +32,14 @@ export class Collection {
       this.cardList.push($card);
     }
 
+  }
+
+  findPrices(searchCardService: SearchCardService) {
+    this.cardList.forEach((item, index) => {
+      searchCardService.findCardPrice(item['name']).subscribe( value => {
+        item['price'] = value['prices']['eur'];
+        //this.totalPrice += item['price'] *item ['quantity']
+      })
+    })
   }
 }

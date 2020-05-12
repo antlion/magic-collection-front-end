@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Card} from '../models/card.model';
 
 @Pipe({
-  name: 'countCards'
+  name: 'countCards',
+  pure: false
 })
 export class CountCardsPipe implements PipeTransform {
 

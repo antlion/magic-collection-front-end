@@ -33,7 +33,6 @@ export class CardComponent implements OnInit {
       this.deck.addCardToDeck($card, this.sideboard);
       this.decksService.saveDeck(this.deck);
     } else {
-      console.log(111)
       this.collection.addCard($card);
       this.decksService.saveCollection(this.collection);
     }
@@ -44,7 +43,7 @@ export class CardComponent implements OnInit {
     console.log('addtocollection')
     card.quantity = number
     card['quantityCol'] = number + numberCollection
-    this.decksService.addCardToDefaultCollection(card).subscribe(value => {
+    this.decksService.addCardToDefaultCollection(card, false).subscribe(value => {
       if (value == true || '_id' in value){
         card.inCollection = true
         card.quantityCollection = number + numberCollection;

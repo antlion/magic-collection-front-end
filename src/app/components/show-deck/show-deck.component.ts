@@ -23,15 +23,23 @@ export class ShowDeckComponent implements OnInit {
   deck: Deck = new Deck('new-deck');
   importCardsList: any;
 
-  collections: Collection[];
-  tableView: boolean = true;
+  collections: Collection[] = [];
+  collectionsWishList: Collection[] = [];
+  selectedColletion: Collection;
+  tableView: boolean = false;
 
   constructor(private actRoute: ActivatedRoute, private decksService: DecksService,
               private cdRef: ChangeDetectorRef, public dialog: MatDialog,
               private modalService: NgbModal,
               private searchCardService: SearchCardService) {
     this.decksService.getMyCollections(false).subscribe(data => {
-      this.collections = data['data'];
+      data['data'].forEach(item => {
+        if (item.wishList == true){
+          this.collectionsWishList.push(item);
+        } else {
+          this.collections.push(item)
+        }
+      })
 
     });
   }
@@ -58,13 +66,13 @@ export class ShowDeckComponent implements OnInit {
   }
 
 
-  addCard(toDeck= '') {
+  addCard(toDeck= '', sideboard=false) {
     const dialogRef = this.dialog.open(AddCardComponent, {
       width: '600px',
       data: {
         deck: this.deck,
         saveToDB: true,
-        sideboard: true,
+        sideboard: sideboard,
         todeck: toDeck
       }
     });
@@ -155,5 +163,44 @@ export class ShowDeckComponent implements OnInit {
         $(this).find('img').hide();
       });
     }
+  }
+
+  showTable(b: boolean) {
+    this.tableView = b
+  }
+
+  tableChange($card, sideboard = false, toDeck='') {
+    if(toDeck == 'mayboard'){
+      this.deck.addCardToDeck($card, false, true);
+      this.decksService.saveDeck(this.deck);
+      return;
+    }
+    if (this.deck) {
+      this.deck.addCardToDeck($card, sideboard);
+      this.decksService.saveDeck(this.deck);
+    }
+  }
+
+  addCardsCollection(card, quantitycollection, wishList = false){
+    card['quantityCol'] = quantitycollection
+    this.decksService.addCardToDefaultCollection(card, wishList).subscribe(value => {
+      if (value == true || '_id' in value){
+        if (wishList){
+
+        } else {
+          card.inCollection = true
+          card.quantityCollectionWishList = quantitycollection;
+        }
+
+      }
+    })
+  }
+
+  addToCollection(content){
+    const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      if (result === 'save'){
+        console.log(result)
+      }
+    });
   }
 }

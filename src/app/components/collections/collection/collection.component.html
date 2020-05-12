@@ -13,17 +13,21 @@
       <div class="col-lg-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Search Card <button class="btn btn-sm btn-primary" (click)="addCard()">Add Card</button>
+            <h5 class="card-title">Search Card
             </h5>
-            <input class="form-control" type="text" placeholder="Search">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <input class="form-control" type="text" placeholder="Search" (keyup)="searchCard($event)">
+<!--            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
 <!--            <a href="#" class="card-link">Card link</a>-->
 <!--            <a href="#" class="card-link">Another link</a>-->
+            <br>
+            <button class="btn btn-sm btn-primary" (click)="addCard()">Add Card</button>
           </div>
         </div>
       </div>
       <div class="col-lg-8">
-        <app-card [cards]="collection.cardList" [collection]="collection"></app-card>
+        <app-card [cards]="collection.cardList" [collection]="collection" *ngIf="filteredCard == null"></app-card>
+        <app-card [cards]="filteredCard" [collection]="collection" *ngIf="filteredCard != null"></app-card>
+        <p *ngIf="filteredCard != null && filteredCard.length == 0"class="card-text">No card</p>
       </div>
     </div>
   </div>

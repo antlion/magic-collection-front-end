@@ -8,7 +8,15 @@
       (deck.enchantments | countCards) +
       (deck.artifacts | countCards)
       }}
-      <button mat-raised-button color="primary" (click)="importCards(mymodal)">Import Cards</button>
+      <button type="button" class="btn btn-link" (click)="importCards(mymodal)">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button type="button" class="btn btn-link" (click)="showTable(true)" *ngIf="!tableView">
+        <i class="fas fa-table"></i>
+      </button>
+      <button type="button" class="btn btn-link" (click)="showTable(false)" *ngIf="tableView">
+        <i class="fas fa-list"></i>
+      </button>
     </li>
   </ol>
 </nav>
@@ -25,33 +33,33 @@
 
   <div class="row">
     <div class="col-4" *ngIf="deck.creatures.length >= 1">
-      <h3>Creatures <span class="badge badge-light">{{deck.creatures | countCards}}</span></h3>
+      <h3>Creatures <span class="badge badge-light" [innerHTML]="deck.creatures | countCards"></span></h3>
       <hr>
       <app-card [cards]="deck.creatures" [deck]="deck" [collections]="collections"></app-card>
 
       <div *ngIf="deck.planeswalkers.length >=1">
-        <h3>PlaneSwlaker <span class="badge badge-light">{{deck.planeswalkers | countCards}}</span></h3>
+        <h3>PlaneSwlaker <span class="badge badge-light" [innerHTML]="deck.planeswalkers | countCards"></span></h3>
         <hr>
         <app-card [cards]="deck.planeswalkers" [deck]="deck" [collections]="collections"></app-card>
       </div>
     </div>
     <div class="col-4" *ngIf="deck.spells.length >= 1">
-      <h3>Spells <span class="badge badge-light">{{deck.spells | countCards}}</span></h3>
+      <h3>Spells <span class="badge badge-light" [innerHTML]="deck.spells | countCards" >{{deck.spells | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.spells" [deck]="deck" [collections]="collections"></app-card>
     </div>
     <div class="col-4" *ngIf="deck.artifacts.length >= 1">
-      <h3>Artifacts <span class="badge badge-light">{{deck.artifacts | countCards}}</span></h3>
+      <h3>Artifacts <span class="badge badge-light" [innerHTML]="deck.artifacts | countCards">{{deck.artifacts | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.artifacts" [deck]="deck" [collections]="collections"></app-card>
     </div>
     <div class="col-4" *ngIf="deck.enchantments.length >= 1">
-      <h3>Enchantments <span class="badge badge-light">{{deck.enchantments | countCards}}</span></h3>
+      <h3>Enchantments <span class="badge badge-light" [innerHTML]="deck.enchantments | countCards">{{deck.enchantments | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.enchantments" [deck]="deck" [collections]="collections"></app-card>
     </div>
     <div class="col" *ngIf="deck.lands.length >= 1">
-      <h3>Lands <span class="badge badge-light">{{deck.lands | countCards}}</span></h3>
+      <h3>Lands <span class="badge badge-light" [innerHTML]="deck.lands | countCards">{{deck.lands | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.lands" [deck]="deck" [collections]="collections"></app-card>
     </div>
@@ -62,12 +70,12 @@
   <div class="row">
     <div class="col">
       <h2> Sideboard
-        <button class="btn btn-sm btn-primary" (click)="addCard()">Add Card</button>
+        <button class="btn btn-sm btn-primary" (click)="addCard('', true)">Add Card</button>
       </h2>
       <div *ngIf="deck.sideboard.length >= 1">
-        <h3>Sideboard <span class="badge badge-light">{{deck.sideboard | countCards}}</span></h3>
+        <h3>Sideboard <span class="badge badge-light" [innerHTML]="deck.sideboard | countCards">{{deck.sideboard | countCards}}</span></h3>
         <hr>
-        <app-card [cards]="deck.sideboard" [deck]="deck"></app-card>
+        <app-card [cards]="deck.sideboard" [deck]="deck" [sideboard]="true"></app-card>
       </div>
     </div>
 
@@ -76,7 +84,7 @@
         <button class="btn btn-sm btn-primary" (click)="addCard('mayboard')">Add Card</button>
       </h2>
       <div *ngIf="deck.mayboard.length >= 1">
-        <h3>Sideboard <span class="badge badge-light">{{deck.mayboard | countCards}}</span></h3>
+        <h3>Sideboard <span class="badge badge-light" [innerHTML]="deck.mayboard | countCards">{{deck.mayboard | countCards}}</span></h3>
         <hr>
         <app-card [cards]="deck.mayboard" [deck]="deck" [todeck]="'mayboard'"></app-card>
 
@@ -84,24 +92,6 @@
     </div>
 
   </div>
-
-  <!--  <div class="row">-->
-  <!--    <div class="col" *ngIf="deck.sideboard.length >= 1">-->
-  <!--      <h3>Sideboard <span class="badge badge-light">{{deck.sideboard | countCards}}</span></h3>-->
-  <!--      <hr>-->
-  <!--      <app-card [cards]="deck.sideboard" [deck]="deck"></app-card>-->
-  <!--    </div>-->
-  <!--  </div>-->
-
-  <!--  <div class="row">-->
-  <!--    <div class="col">-->
-  <!--      <h2> MayBoard-->
-  <!--        <button class="btn btn-sm btn-primary" (click)="addCard('mayboard')">Add Card</button>-->
-  <!--      </h2>-->
-  <!--    </div>-->
-
-  <!--  </div>-->
-
 
 
 </div>
@@ -114,22 +104,41 @@
       <th scope="col" style="width: 3%"><i class="fas fa-box"></i></th>
       <th scope="col" style="width: 3%"><i class="fas fa-star"></i></th>
       <th scope="col" style="width: 3%"><i class="fas fa-box-open"></i></th>
-      <th scope="col" >Name</th>
-      <th scope="col" >Type</th>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
       <th scope="col">Cost</th>
-      <th scope="col" >Price</th>
+      <th scope="col">Price</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td class="table-active" colspan="7">Creatures <span class="badge badge-primary">{{deck.creatures | countCards}}</span></td>
+      <td class="table-primary" colspan="7">Main <span class="badge badge-primary">
+         {{ (deck.creatures | countCards) +
+      (deck.spells | countCards) +
+      (deck.planeswalkers| countCards) +
+      (deck.lands | countCards) +
+      (deck.enchantments | countCards) +
+      (deck.artifacts | countCards)
+        }}
+      </span>
+        <button type="button" style="padding: 0.3px;margin-left: 1px;" class="btn btn-link" (click)="addCard('', false)">
+          <i class="fas fa-plus"></i>
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td class="table-active" colspan="7" *ngIf="deck.creatures.length > 0">Creatures <span
+        class="badge badge-primary">{{deck.creatures | countCards}}</span>
+      </td>
     </tr>
     <tr *ngFor="let card of deck.creatures;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+<!--      <td><button class="btn btn-sm btn-outline-primary" (click)="addToCollection(addCollection)">{{card.quantityCollection}}</button></td>-->
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection" (change)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
-        <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
       <td [innerHTML]="card.manaCost"></td>
@@ -144,78 +153,108 @@
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
       <td><a href="#" class="preview ">{{card.name}}
-        <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
       <td [innerHTML]="card.manaCost"></td>
       <td>{{card.price * card.quantity}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.spells.length > 0">Spells <span class="badge badge-primary">{{deck.spells | countCards}}</span></td>
+      <td class="table-active" colspan="7" *ngIf="deck.spells.length > 0">Spells <span
+        class="badge badge-primary">{{deck.spells | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.spells;">
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
       <td><a href="#" class="preview ">{{card.name}}
-        <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
       <td [innerHTML]="card.manaCost"></td>
       <td>{{card.price * card.quantity}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.enchantments.length > 0">Enchantments
-        <span class="badge badge-primary">{{deck.enchantments | countCards}}</span></td>
+      <td class="table-active" colspan="7" *ngIf="deck.artifacts.length > 0">Artifacts
+        <span class="badge badge-primary">{{deck.artifacts | countCards}}</span></td>
+    </tr>
+    <tr *ngFor="let card of deck.artifacts;">
+      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
+      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
+      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><a href="#" class="preview ">{{card.name}}
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
+      </a></td>
+      <td>{{card.type}}</td>
+      <td [innerHTML]="card.manaCost"></td>
+      <td>{{card.price * card.quantity}} &euro;</td>
     </tr>
     <tr *ngFor="let card of deck.enchantments;">
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
       <td><a href="#" class="preview ">{{card.name}}
-        <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
       <td [innerHTML]="card.manaCost"></td>
       <td>{{card.price * card.quantity}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.lands.length > 0">Lands <span class="badge badge-primary">{{deck.lands | countCards}}</span></td>
+      <td class="table-active" colspan="7" *ngIf="deck.lands.length > 0">Lands <span
+        class="badge badge-primary">{{deck.lands | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.lands;">
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
       <td><a href="#" class="preview ">{{card.name}}
-        <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
       <td [innerHTML]="card.manaCost"></td>
       <td>{{card.price * card.quantity}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.sideboard.length > 0">Sideboard <span class="badge badge-primary">{{deck.sideboard | countCards}}</span></td>
+      <td class="table-primary" colspan="7">Sideboard <span
+        class="badge badge-primary">{{deck.sideboard | countCards}}</span>
+        <button type="button" style="padding: 0.3px;margin-left: 1px;" class="btn btn-link" (click)="addCard('', true)">
+          <i class="fas fa-plus"></i>
+        </button>
+      </td>
     </tr>
     <tr *ngFor="let card of deck.sideboard;">
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
       <td><a href="#" class="preview ">{{card.name}}
-        <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
       <td [innerHTML]="card.manaCost"></td>
       <td>{{card.price * card.quantity}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.mayboard.length > 0">Mayboard<span class="badge badge-primary">{{deck.mayboard | countCards}}</span></td>
+      <td class="table-primary" colspan="7">Mayboard <span
+        class="badge badge-primary">{{deck.mayboard | countCards}}</span>
+        <button type="button" style="padding: 0.3px;margin-left: 1px;" class="btn btn-link" (click)="addCard('', true)">
+          <i class="fas fa-plus"></i>
+        </button>
+      </td>
     </tr>
     <tr *ngFor="let card of deck.mayboard;">
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
       <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
       <td><a href="#" class="preview ">{{card.name}}
-        <img class='only-show-on-hover' src="{{card.png}}" style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem" />
+        <img class='only-show-on-hover' src="{{card.png}}"
+             style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
       <td [innerHTML]="card.manaCost"></td>
@@ -229,7 +268,6 @@
     </tbody>
   </table>
 </div>
-
 
 
 <ng-template #mymodal let-modal>
@@ -250,5 +288,29 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Import')">Import</button>
+  </div>
+</ng-template>
+
+
+<ng-template #addCollection let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title"> Add to Collection</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <select required="required" class="form-control" [(ngModel)]="selectedColletion" [ngModelOptions]="{standalone: true}">
+          <option *ngFor="let collection of collections" [ngValue]="collection">
+            {{collection.name}}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('save')">Salva</button>
   </div>
 </ng-template>

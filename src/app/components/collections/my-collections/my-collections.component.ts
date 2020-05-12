@@ -6,6 +6,7 @@ import {AddCollectionComponent} from '../add-collection/add-collection.component
 import {Collection} from '../../../models/collection.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DecksService} from '../../../services/decks/decks.service';
+import {AlertService} from "../../../services/alert.service";
 
 @Component({
   selector: 'app-my-collections',
@@ -17,7 +18,7 @@ export class MyCollectionsComponent implements OnInit {
   collection = new Collection('');
   collections = []
 
-  constructor(public deckSerivce: DecksService, private modalService: NgbModal) {
+  constructor(public deckSerivce: DecksService, private modalService: NgbModal, private alertService:AlertService) {
     deckSerivce.getMyCollections().subscribe(data => {
       this.collections = data['data'];
     })
@@ -44,5 +45,15 @@ export class MyCollectionsComponent implements OnInit {
     //   // this.decksService.addDeck(result);
     //   // this.myDeck.push(result);
     // });
+  }
+
+  deleteCollection(collection: Collection) {
+    this.deckSerivce.deleteCollection(collection).subscribe(event => {
+      this.alertService.success('Deleted!')
+
+      this.collections.forEach( (item, index) => {
+        if(item['_id'] === event['data']._id)  this.collections.splice(index,1);
+      });
+    })
   }
 }

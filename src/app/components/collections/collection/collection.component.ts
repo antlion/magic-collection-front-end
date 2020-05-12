@@ -17,6 +17,7 @@ export class CollectionComponent implements OnInit {
 
   collection: Collection;
   importCardsList: any;
+  filteredCard;
 
   constructor(private decksService: DecksService, private actRoute: ActivatedRoute,
               private modalService: NgbModal,
@@ -26,6 +27,9 @@ export class CollectionComponent implements OnInit {
 
     this.decksService.getCollection(idDeck).subscribe((data: any[]) => {
       this.collection = new Collection( data['data']['name'],data['data']['wishList'], data['data']['cardList'],data['data']['_id'] );
+      this.collection['_id'] = data['data']['_id'];
+      this.collection.findPrices(this.searchCardService);
+
     });
   }
 
@@ -82,10 +86,14 @@ export class CollectionComponent implements OnInit {
               carNew = new Card(data['data'][0].name, data['data'][0].set,
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
                 data['data'][0].mana_cost, data['data'][0].image_uris.png);
+              carNew['price'] =  data['data'][0]['prices']['eur']
+
             }else{
               carNew = new Card(data['name'], data['set'],
                 data['image_uris'].art_crop, +item[0], data['type_line'],
                 data['mana_cost'], data['image_uris'].png);
+              carNew['price'] =  data['prices']['eur']
+
             }
             this.collection.addCard(carNew);
             this.decksService.saveCollection(this.collection);
@@ -100,10 +108,14 @@ export class CollectionComponent implements OnInit {
               carNew = new Card(data['data'][0].name, data['data'][0].set,
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
                 data['data'][0].mana_cost, data['data'][0].image_uris.png);
+              carNew['price'] =  data['data'][0]['prices']['eur']
+
             }else{
               carNew = new Card(data['name'], data['set'],
                 data['image_uris'].art_crop, +item[0], data['type_line'],
                 data['mana_cost'], data['image_uris'].png);
+              carNew['price'] =  data['prices']['eur']
+
             }
             this.collection.addCard(carNew);
             this.decksService.saveCollection(this.collection);
@@ -116,4 +128,19 @@ export class CollectionComponent implements OnInit {
     });
   }
 
+  searchCard($event: Event) {
+    if ($event.target['value'].length >= 3) {
+      this.decksService.searchInCollection(this.collection, $event.target['value'])
+        .subscribe((data: Object[]) => {
+        if (data.length == 0){
+          this.filteredCard = []
+        } else {
+          this.filteredCard =data[0]['cardList']
+        }
+      });
+    } else {
+      this.filteredCard = null;
+    }
+
+  }
 }

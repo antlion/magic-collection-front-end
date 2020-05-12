@@ -102,13 +102,26 @@ export class DecksService {
 
   }
 
-  addCardToDefaultCollection(card: Card) {
+  addCardToDefaultCollection(card: Card, wishList = false) {
     const localToken = this.authService.getDecodedAccessToken();
-    const api = `${environment.endpoint}/my-collection/${localToken.userId}/default`;
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/default/${wishList}`;
     return this.http.post(api, card);
+  }
+
+
+  searchInCollection(collection: Collection, value: string) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/searchCards/${collection['_id']}/${value}`;
+    return this.http.get(api);
   }
 
   findCardPrice(name: any) {
 
+  }
+
+  deleteCollection(collection: Collection) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/delete/${collection['_id']}`;
+    return this.http.delete(api);
   }
 }

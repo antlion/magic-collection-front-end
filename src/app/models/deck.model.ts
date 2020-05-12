@@ -15,6 +15,7 @@ export class Deck {
   sideboard: Card[] = [];
   mayboard: Card[] = [];
   totalPrice = 0;
+  totalCard
 
   constructor(name: string) {
     this.name = name;

@@ -43,10 +43,10 @@ export class AuthService {
         this.getUserProfile(res._id).subscribe((res: any) => {
           this.currentUser = res.msg;
           console.log(this.currentUser);
-          this.router.navigate(['user-profile/' + res.msg._id]);
+          this.router.navigate(['my-decks']);
         });
       }, err => {
-        this.alertService.success('askjdhasjkdh');
+        this.alertService.error('Unable to log in: ' + err);
         }
       );
   }
@@ -105,4 +105,22 @@ export class AuthService {
     }
   }
 
+  isTokenExpired(token?: string): boolean {
+    if(!token) token = this.getToken();
+    if(!token) return true;
+
+    const date = this.getTokenExpirationDate(token);
+    if(date === undefined) return false;
+    return !(date.valueOf() > new Date().valueOf());
+  }
+
+  getTokenExpirationDate(token: string): Date {
+    const decoded = jwt_decode(token);
+
+    if (decoded.exp === undefined) return null;
+
+    const date = new Date(0);
+    date.setUTCSeconds(decoded.exp);
+    return date;
+  }
 }

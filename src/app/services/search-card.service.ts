@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Collection} from "../models/collection.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +22,5 @@ export class SearchCardService {
   findCardPrice(name: string) {
     return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/named?exact="+name);
   }
+
 }

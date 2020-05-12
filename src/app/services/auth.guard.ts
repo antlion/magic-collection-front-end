@@ -14,7 +14,13 @@ export class AuthGuard implements CanActivate {
       window.alert('Access not allowed!');
       this.router.navigate(['log-in']);
     }
-    return true;
+    // check if token is expired
+    if (!this.authService.isTokenExpired()) {
+      return true;
+    }
+
+    this.router.navigate(['log-in']);
+    return false;
   }
 
   constructor(
