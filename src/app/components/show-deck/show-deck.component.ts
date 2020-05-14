@@ -114,11 +114,13 @@ export class ShowDeckComponent implements OnInit {
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
-                data['data'][0].mana_cost, data['data'][0].image_uris.png);
+                data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
+              carNew['price'] = data['data'][0]['prices']['eur']
             }else{
               carNew = new Card(data['name'], data['set'],
                 data['image_uris'].art_crop, +item[0], data['type_line'],
-                data['mana_cost'], data['image_uris'].png);
+                data['mana_cost'], data['image_uris'].png, data['rarity']);
+              carNew['price'] =data['prices']['eur']
             }
             this.deck.addCardToDeck(carNew);
             this.decksService.saveDeck(this.deck);
@@ -132,11 +134,15 @@ export class ShowDeckComponent implements OnInit {
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
-                data['data'][0].mana_cost, data['data'][0].image_uris.png);
+                data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
+              carNew['price'] = data['data'][0]['prices']['eur']
+
             }else{
               carNew = new Card(data['name'], data['set'],
                 data['image_uris'].art_crop, +item[0], data['type_line'],
-                data['mana_cost'], data['image_uris'].png);
+                data['mana_cost'], data['image_uris'].png, data['rarity']);
+              carNew['price'] =data['prices']['eur']
+
             }
             this.deck.addCardToDeck(carNew, true);
             this.decksService.saveDeck(this.deck);
@@ -202,5 +208,36 @@ export class ShowDeckComponent implements OnInit {
         console.log(result)
       }
     });
+  }
+
+  exportDeck() {
+    let content = ''
+    this.deck.creatures.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    this.deck.planeswalkers.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    this.deck.spells.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    this.deck.artifacts.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    this.deck.enchantments.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    this.deck.lands.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    content += '\n'
+    this.deck.sideboard.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url= window.URL.createObjectURL(blob);
+
+    window.open(url);
+
   }
 }

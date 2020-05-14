@@ -1,14 +1,15 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">My Decks
-      <button class="btn btn-sm btn-success" type="button" (click)="addNewDeck()">New Deck</button>
-    </li>
-  </ol>
-</nav>
+<!--<nav aria-label="breadcrumb">-->
+<!--  <ol class="breadcrumb">-->
+<!--    <li class="breadcrumb-item active" aria-current="page">My Decks-->
+<!--      <button class="btn btn-sm btn aqua-gradient" type="button" (click)="addNewDeck()">New Deck</button>-->
+<!--    </li>-->
+<!--  </ol>-->
+<!--</nav>-->
 
 
-<div style="padding: 13px;">
   <div class="container">
+    <button class="btn btn-sm btn aqua-gradient" type="button" (click)="addNewDeck()">New Deck</button>
+
     <div class="row">
       <div class="col-lg-12">
         <mat-list>
@@ -16,7 +17,7 @@
             <mat-icon matListIcon><i class="ss ss-bcore"></i></mat-icon>
             <h4 matLine routerLink="/my-decks/{{deck._id}}">{{deck.name}}</h4>
             <p matLine class="demo-2">
-              <span class="badge badge-info badge-pill"> {{deck.type}}</span>
+              <span class="badge badge-pill badge-default"> {{deck.type}}</span>
             </p>
             <mat-action-list>
               <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -34,4 +35,3 @@
     </div>
 
   </div>
-</div>

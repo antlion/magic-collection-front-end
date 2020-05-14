@@ -1,22 +1,24 @@
-<!--<mat-toolbar color="primary">
-  <h1>
-    My Angular Store
-  </h1>
-  <button mat-button routerLink="/">Home</button>
-  <button mat-button routerLink="/about">About</button>
-  <button mat-button (click)="logout()" *ngIf="this.authService.isLoggedIn" type="button" class="btn btn-danger">Logout</button>
-</mat-toolbar>
-<router-outlet></router-outlet>-->
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark primary-color">
 
-<nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary">
+  <!-- Navbar brand -->
   <a class="navbar-brand" href="#">Magic Collection</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarText">
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="basicExampleNav">
+
+    <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#">Home
+          <span class="sr-only">(current)</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="this.authService.isLoggedIn">
         <a class="nav-link" href="my-decks" routerLinkActive="my-decks">Decks</a>
@@ -24,29 +26,58 @@
       <li class="nav-item" *ngIf="this.authService.isLoggedIn">
         <a class="nav-link" href="my-collections">Collection</a>
       </li>
+
+
     </ul>
-    <div *ngIf="!this.authService.isLoggedIn" class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a *ngIf="!this.authService.isLoggedIn" type="button"  class="nav-link" routerLinkActive="active" routerLink="/sign-up">Sign up</a>
-        </li>
-        <li class="nav-item">
-          <a *ngIf="!this.authService.isLoggedIn" type="button" class="nav-link" routerLinkActive="active" routerLink="/log-in">Sign in</a>
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="this.authService.isLoggedIn" class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a *ngIf="this.authService.isLoggedIn" class="nav-link" href="#">User Profile</a>
-        </li>
-        <li class="nav-item">
-          <button (click)="logout()" *ngIf="this.authService.isLoggedIn" type="button" class="btn btn-danger">Logout</button>
-        </li>
-      </ul>
-    </div>
+    <!-- Links -->
+
+
   </div>
+  <!-- Collapsible content -->
+
 </nav>
+<!--/.Navbar-->
+
+
+<!--<nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary">-->
+<!--  <a class="navbar-brand" href="#">Magic Collection</a>-->
+<!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--    <span class="navbar-toggler-icon"></span>-->
+<!--  </button>-->
+<!--  <div class="collapse navbar-collapse" id="navbarText">-->
+<!--    <ul class="navbar-nav mr-auto">-->
+<!--      <li class="nav-item active">-->
+<!--        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" *ngIf="this.authService.isLoggedIn">-->
+<!--        <a class="nav-link" href="my-decks" routerLinkActive="my-decks">Decks</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" *ngIf="this.authService.isLoggedIn">-->
+<!--        <a class="nav-link" href="my-collections">Collection</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--    <div *ngIf="!this.authService.isLoggedIn" class="navbar-collapse collapse w-100 order-3 dual-collapse2">-->
+<!--      <ul class="navbar-nav ml-auto">-->
+<!--        <li class="nav-item">-->
+<!--          <a *ngIf="!this.authService.isLoggedIn" type="button"  class="nav-link" routerLinkActive="active" routerLink="/sign-up">Sign up</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a *ngIf="!this.authService.isLoggedIn" type="button" class="nav-link" routerLinkActive="active" routerLink="/log-in">Sign in</a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--    <div *ngIf="this.authService.isLoggedIn" class="navbar-collapse collapse w-100 order-3 dual-collapse2">-->
+<!--      <ul class="navbar-nav ml-auto">-->
+<!--        <li class="nav-item">-->
+<!--          <a *ngIf="this.authService.isLoggedIn" class="nav-link" href="#">User Profile</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <button (click)="logout()" *ngIf="this.authService.isLoggedIn" type="button" class="btn btn-danger">Logout</button>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</nav>-->
 
 
 

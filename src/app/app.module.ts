@@ -47,6 +47,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatMenuModule} from "@angular/material/menu";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TableCardComponent } from './components/show-deck/table-card/table-card.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -78,31 +80,33 @@ import { TableCardComponent } from './components/show-deck/table-card/table-card
     CountCardsPrice,
     TableCardComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
-        MatGridListModule,
-        FlexLayoutModule,
-        MatListModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatInputModule,
-        FormsModule,
-        MatDialogModule,
-        SocialLoginModule,
-        ReactiveFormsModule,
-        MatSlideToggleModule,
-        NgbModule,
-        MatMenuModule,
-        FontAwesomeModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatGridListModule,
+    FlexLayoutModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    FormsModule,
+    MatDialogModule,
+    SocialLoginModule,
+    ReactiveFormsModule,
+    MatSlideToggleModule,
+    NgbModule,
+    MatMenuModule,
+    FontAwesomeModule,
+    MatTableModule,
+    MatSortModule
+  ],
   providers: [MatDialog,
     {
       provide: HTTP_INTERCEPTORS,

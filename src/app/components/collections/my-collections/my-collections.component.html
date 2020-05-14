@@ -15,7 +15,7 @@
         <mat-list>
           <mat-list-item *ngFor="let collection of collections" style="cursor: pointer">
             <mat-icon matListIcon><i class="mi mi-planeswalk"></i></mat-icon>
-            <h4 matLine routerLink="my-collection/{{collection._id}}">{{collection.name}}</h4>
+            <h4 matLine routerLink="/my-collection/{{collection._id}}">{{collection.name}}</h4>
             <p matLine class="demo-2">
               <span class="badge badge-info badge-pill" *ngIf="collection.wishList">WishList: {{collection.cardList | countCards}}</span>
               <span class="badge badge-info badge-pill" *ngIf="!collection.wishList">Collection: {{collection.cardList | countCards}}</span>
@@ -37,9 +37,6 @@
 
   </div>
 </div>
-
-
-
 
 <ng-template #mymodal let-modal>
   <div class="modal-header">

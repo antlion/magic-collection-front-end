@@ -2,12 +2,14 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">My collection {{collection.name}}
       Total Card: {{collection.cardList | countCards}}
-      <button mat-raised-button color="primary" (click)="importCards(mymodal)">Import Cards</button>
+      <button type="button" class="btn btn-link" (click)="importCards(mymodal)">
+        <i class="fas fa-plus"></i>
+      </button>
     </li>
   </ol>
 </nav>
 
-<div style="padding: 13px;">
+<div style="padding: 13px;" *ngIf="!showTable">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-4">
@@ -30,6 +32,69 @@
         <p *ngIf="filteredCard != null && filteredCard.length == 0"class="card-text">No card</p>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+      </mat-form-field>
+      <button class="btn btn-sm btn-primary" (click)="addCard()" style="margin-left: 1px">Add Card</button>
+
+      <table mat-table #collectionTable [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element">
+            <a href="#" class="preview ">{{element.name}}
+              <img class='only-show-on-hover' src="{{element.png}}"
+                   style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
+            </a> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element">
+            <input type="number" class="form-control" style="width: 3.0rem" [(ngModel)]="element.quantity"
+            (change)="addCardsCollection(element,element.quantity)"> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edition">
+          <th mat-header-cell *matHeaderCellDef> Edition </th>
+          <td mat-cell *matCellDef="let element"> <i class="ss ss-{{element.edition}} ss-{{element.rarity}}"></i> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.price * element.quantity | number : '1.2-2'}}</td>
+        </ng-container>
+
+<!--        &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="weight">-->
+<!--          <th mat-header-cell *matHeaderCellDef> Weight </th>-->
+<!--          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="symbol">-->
+<!--          <th mat-header-cell *matHeaderCellDef> Symbol </th>-->
+<!--          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+<!--        </ng-container>-->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
   </div>
 </div>
 

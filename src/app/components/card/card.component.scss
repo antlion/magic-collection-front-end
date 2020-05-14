@@ -2,3 +2,16 @@ a>div { display: none; }
 a:hover>div { display: block; position: relative; margin: 0 auto;
   width: 13.5em;
   height: 20.5em; }
+
+
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

@@ -9,6 +9,7 @@ import {AlertService} from './alert.service';
 import * as jwt_decode from 'jwt-decode';
 
 import { environment } from '../../environments/environment';
+import {stringify} from "querystring";
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,7 @@ export class AuthService {
           this.router.navigate(['my-decks']);
         });
       }, err => {
-        this.alertService.error('Unable to log in: ' + err);
+        this.alertService.error('Unable to log in: ' + stringify(err));
         }
       );
   }

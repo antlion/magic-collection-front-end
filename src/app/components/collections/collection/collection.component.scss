@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  text-align: center;
+
+}
+
+.hide-image {
+  display: none;
+}
+
+
+a img.only-show-on-hover {
+  visibility: hidden;
+}
+a:hover img.only-show-on-hover  {
+  visibility: visible;
+}

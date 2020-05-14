@@ -1,25 +1,47 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">Deck - <b>{{deck.name}} - Cards Number: </b>
-      {{ (deck.creatures | countCards) +
-      (deck.spells | countCards) +
-      (deck.planeswalkers| countCards) +
-      (deck.lands | countCards) +
-      (deck.enchantments | countCards) +
-      (deck.artifacts | countCards)
-      }}
-      <button type="button" class="btn btn-link" (click)="importCards(mymodal)">
-        <i class="fas fa-plus"></i>
-      </button>
-      <button type="button" class="btn btn-link" (click)="showTable(true)" *ngIf="!tableView">
-        <i class="fas fa-table"></i>
-      </button>
-      <button type="button" class="btn btn-link" (click)="showTable(false)" *ngIf="tableView">
-        <i class="fas fa-list"></i>
-      </button>
-    </li>
-  </ol>
-</nav>
+<!--<nav aria-label="breadcrumb">-->
+<!--  <ol class="breadcrumb">-->
+<!--    <li class="breadcrumb-item active" aria-current="page">Deck - <b>{{deck.name}} - Cards Number: </b>-->
+<!--      {{ (deck.creatures | countCards) +-->
+<!--      (deck.spells | countCards) +-->
+<!--      (deck.planeswalkers| countCards) +-->
+<!--      (deck.lands | countCards) +-->
+<!--      (deck.enchantments | countCards) +-->
+<!--      (deck.artifacts | countCards)-->
+<!--      }}-->
+<!--      <button type="button" class="btn btn-link" (click)="importCards(mymodal)">-->
+<!--        <i class="fas fa-plus"></i>-->
+<!--      </button>-->
+<!--      <button type="button" class="btn btn-link" (click)="showTable(true)" *ngIf="!tableView">-->
+<!--        <i class="fas fa-table"></i>-->
+<!--      </button>-->
+<!--      <button type="button" class="btn btn-link" (click)="showTable(false)" *ngIf="tableView">-->
+<!--        <i class="fas fa-list"></i>-->
+<!--      </button>-->
+<!--      <button type="button" class="btn btn-link" (click)="exportDeck()"><i class="fas fa-download"></i></button>-->
+<!--    </li>-->
+<!--  </ol>-->
+<!--</nav>-->
+
+Deck - <b>{{deck.name}} - Cards Number: </b>
+{{ (deck.creatures | countCards) +
+(deck.spells | countCards) +
+(deck.planeswalkers| countCards) +
+(deck.lands | countCards) +
+(deck.enchantments | countCards) +
+(deck.artifacts | countCards)
+}}
+
+<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-link" (click)="importCards(mymodal)">
+    <i class="fas fa-plus"></i>
+  </button>
+  <button type="button" class="btn btn-link" (click)="showTable(true)" *ngIf="!tableView">
+    <i class="fas fa-table"></i>
+  </button>  <button type="button" class="btn btn-link" (click)="showTable(false)" *ngIf="tableView">
+    <i class="fas fa-list"></i>
+  </button>
+  <button type="button" class="btn btn-link" (click)="exportDeck()"><i class="fas fa-download"></i></button>
+</div>
 
 <div class="container-fluid" *ngIf="!tableView">
 
@@ -32,33 +54,34 @@
   </div>
 
   <div class="row">
-    <div class="col-4" *ngIf="deck.creatures.length >= 1">
+    <div class="col-lg-4 col-md-12" *ngIf="deck.creatures.length >= 1">
       <h3>Creatures <span class="badge badge-light" [innerHTML]="deck.creatures | countCards"></span></h3>
       <hr>
       <app-card [cards]="deck.creatures" [deck]="deck" [collections]="collections"></app-card>
 
-      <div *ngIf="deck.planeswalkers.length >=1">
-        <h3>PlaneSwlaker <span class="badge badge-light" [innerHTML]="deck.planeswalkers | countCards"></span></h3>
-        <hr>
-        <app-card [cards]="deck.planeswalkers" [deck]="deck" [collections]="collections"></app-card>
-      </div>
+
     </div>
-    <div class="col-4" *ngIf="deck.spells.length >= 1">
+    <div class="col-lg-4 col-md-12" *ngIf="deck.planeswalkers.length >=1">
+      <h3>PlaneSwlaker <span class="badge badge-light" [innerHTML]="deck.planeswalkers | countCards"></span></h3>
+      <hr>
+      <app-card [cards]="deck.planeswalkers" [deck]="deck" [collections]="collections"></app-card>
+    </div>
+    <div class="col-lg-4 col-md-12" *ngIf="deck.spells.length >= 1">
       <h3>Spells <span class="badge badge-light" [innerHTML]="deck.spells | countCards" >{{deck.spells | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.spells" [deck]="deck" [collections]="collections"></app-card>
     </div>
-    <div class="col-4" *ngIf="deck.artifacts.length >= 1">
+    <div class="col-lg-4 col-md-12" *ngIf="deck.artifacts.length >= 1">
       <h3>Artifacts <span class="badge badge-light" [innerHTML]="deck.artifacts | countCards">{{deck.artifacts | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.artifacts" [deck]="deck" [collections]="collections"></app-card>
     </div>
-    <div class="col-4" *ngIf="deck.enchantments.length >= 1">
+    <div class="col-lg-4 col-md-12" *ngIf="deck.enchantments.length >= 1">
       <h3>Enchantments <span class="badge badge-light" [innerHTML]="deck.enchantments | countCards">{{deck.enchantments | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.enchantments" [deck]="deck" [collections]="collections"></app-card>
     </div>
-    <div class="col" *ngIf="deck.lands.length >= 1">
+    <div class="col-lg-4 col-md-12" *ngIf="deck.lands.length >= 1">
       <h3>Lands <span class="badge badge-light" [innerHTML]="deck.lands | countCards">{{deck.lands | countCards}}</span></h3>
       <hr>
       <app-card [cards]="deck.lands" [deck]="deck" [collections]="collections"></app-card>
@@ -106,13 +129,14 @@
       <th scope="col" style="width: 3%"><i class="fas fa-box-open"></i></th>
       <th scope="col">Name</th>
       <th scope="col">Type</th>
+      <th scope="col">Edition</th>
       <th scope="col">Cost</th>
       <th scope="col">Price</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td class="table-primary" colspan="7">Main <span class="badge badge-primary">
+      <td class="table-primary" colspan="8">Main <span class="badge badge-primary">
          {{ (deck.creatures | countCards) +
       (deck.spells | countCards) +
       (deck.planeswalkers| countCards) +
@@ -127,13 +151,14 @@
       </td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.creatures.length > 0">Creatures <span
+      <td class="table-active" colspan="8" *ngIf="deck.creatures.length > 0">Creatures <span
         class="badge badge-primary">{{deck.creatures | countCards}}</span>
       </td>
     </tr>
     <tr *ngFor="let card of deck.creatures;">
 <!--      <td><button class="btn btn-sm btn-outline-primary" (click)="addToCollection(addCollection)">{{card.quantityCollection}}</button></td>-->
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection" (change)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
@@ -141,11 +166,12 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td ><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity | number : '1.2-2'}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.planeswalkers.length > 0">Planeswlaker
+      <td class="table-active" colspan="8" *ngIf="deck.planeswalkers.length > 0">Planeswlaker
         <span class="badge badge-primary">{{deck.planeswalkers | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.planeswalkers;">
@@ -157,11 +183,12 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td ><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity | number : '1.2-2'}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.spells.length > 0">Spells <span
+      <td class="table-active" colspan="8" *ngIf="deck.spells.length > 0">Spells <span
         class="badge badge-primary">{{deck.spells | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.spells;">
@@ -173,11 +200,12 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td ><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity | number : '1.2-2'}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.artifacts.length > 0">Artifacts
+      <td class="table-active" colspan="8" *ngIf="deck.artifacts.length > 0">Artifacts
         <span class="badge badge-primary">{{deck.artifacts | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.artifacts;">
@@ -189,8 +217,13 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td ><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity | number : '1.2-2'}} &euro;</td>
+    </tr>
+    <tr>
+      <td class="table-active" colspan="8" *ngIf="deck.enchantments.length > 0">Enchantments
+        <span class="badge badge-primary">{{deck.enchantments | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.enchantments;">
       <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
@@ -201,11 +234,12 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td ><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity | number : '1.2-2'}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="7" *ngIf="deck.lands.length > 0">Lands <span
+      <td class="table-active" colspan="8" *ngIf="deck.lands.length > 0">Lands <span
         class="badge badge-primary">{{deck.lands | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.lands;">
@@ -217,11 +251,12 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity | number : '1.2-2'}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-primary" colspan="7">Sideboard <span
+      <td class="table-primary" colspan="8">Sideboard <span
         class="badge badge-primary">{{deck.sideboard | countCards}}</span>
         <button type="button" style="padding: 0.3px;margin-left: 1px;" class="btn btn-link" (click)="addCard('', true)">
           <i class="fas fa-plus"></i>
@@ -237,11 +272,12 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td ><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity | number : '1.2-2'}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-primary" colspan="7">Mayboard <span
+      <td class="table-primary" colspan="8">Mayboard <span
         class="badge badge-primary">{{deck.mayboard | countCards}}</span>
         <button type="button" style="padding: 0.3px;margin-left: 1px;" class="btn btn-link" (click)="addCard('', true)">
           <i class="fas fa-plus"></i>
@@ -257,11 +293,12 @@
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
       </a></td>
       <td>{{card.type}}</td>
+      <td ><i class="ss ss-{{card.edition}} ss-{{card.rarity}}"></i></td>
       <td [innerHTML]="card.manaCost"></td>
-      <td>{{card.price * card.quantity}} &euro;</td>
+      <td>{{card.price * card.quantity  | number : '1.2-2'}} &euro;</td>
     </tr>
     <tr>
-      <td class="table-active" colspan="5"></td>
+      <td class="table-active" colspan="6"></td>
       <td class="table-active"><b>Total</b></td>
       <td class="table-active"><b>{{ deck.totalPrice | number : '1.2-2' }}</b></td>
     </tr>

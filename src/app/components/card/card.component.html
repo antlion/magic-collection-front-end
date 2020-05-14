@@ -1,37 +1,58 @@
-<div class="card" style="border: 0px!important;" *ngFor="let card of cards">
-  <div class="row">
-    <div class="col-md-2">
+<div  style="border: 0px!important;" *ngFor="let card of cards">
+  <div class="row no-gutters">
+    <div class="col">
       <a>
         <img src="{{card.avatar}}" class="avatar" style="max-width: 3rem; max-height: 3rem;border-radius: 0.5rem">
         <div style="z-index: 10000"><img src="{{card.png}}" style="max-width: 15rem"/></div>
       </a>
     </div>
-    <div class="col-md-6">
+    <div class="col-6">
+
       <div class="card-body" style="padding: 0px!important;">
-        <h4 class='mat-subheading-1' style="margin-bottom: -5px">{{card.name}}</h4>
-        <p style="margin-bottom: -5px" [innerHTML]="card.manaCost"></p>
-        <span *ngIf="card.inCollection && deck" class="badge badge-info badge-pill">
-          Collection: {{card.quantityCollection}}
+        <div class="row no-gutters">
+          <div class="col">
+            <div class="d-flex">
+              <h5 class="h5-responsive">{{card.name}}</h5>
+              <span></span>
+              <p style="margin-left: 5px" [innerHTML]="card.manaCost"></p>
+            </div>
+            <div class="row no-gutters">
+              <div class="col">
+                <span *ngIf="card.inCollection && deck" class="badge badge-info badge-pill">
+          Col: {{card.quantityCollection}}
           </span>
-        <button *ngIf="!card.inCollection && deck" class="badge badge-danger badge-pill"
-                (click)="addCardsCollection(card, card.quantity, 0)">
-          Add Collection {{card.quantity}}
-        </button>
+                <button *ngIf="!card.inCollection && deck" class="badge badge-danger badge-pill"
+                        (click)="addCardsCollection(card, card.quantity, 0)">
+                  Add {{card.quantity}}
+                </button>
+                <button *ngIf="card.inCollection && card.quantityCollection - card.quantity   < 0 && deck"
+                        (click)="addCardsCollection(card, card.quantity - card.quantityCollection, card.quantityCollection)"
+                        class="badge badge-danger badge-pill">
+                  Add  {{card.quantity - card.quantityCollection }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+<!--        <h4 class='mat-subheading-1' style="margin-bottom: -5px">{{card.name}}</h4>-->
+<!--        <p style="margin-bottom: -5px" [innerHTML]="card.manaCost"></p>-->
+
+
+
 <!--        <select *ngIf="!card.inCollection && deck">-->
 <!--          <option *ngFor="let collection of collections">{{collection.name}}</option>-->
 <!--        </select>-->
-        <button *ngIf="card.inCollection && card.quantityCollection - card.quantity   < 0 && deck"
-                (click)="addCardsCollection(card, card.quantity - card.quantityCollection, card.quantityCollection)"
-                class="badge badge-danger badge-pill">
-          Add Collection {{card.quantity - card.quantityCollection }}
-        </button>
+
       </div>
     </div>
-    <div class="col-md-3" >
+    <div class="col" >
       <app-increment-input (changeCard)="onCardChange($event)" [card]="card" [value]="card.quantity|| 0" [step]="1"
                            [min]="0" [max]="30" [wrap]="true"></app-increment-input>
     </div>
-    <div class="col-1 d-flex justify-content-center text-center">
+    <div class="col">
       {{card.price * ( card.quantity === 0 ? 1 : card.quantity) | number : '1.2-2'}}&euro;
     </div>
 
