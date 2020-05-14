@@ -22,14 +22,14 @@
 <!--  </ol>-->
 <!--</nav>-->
 
-Deck - <b>{{deck.name}} - Cards Number: </b>
+<h5 class="h5-responsive">Deck - <b>{{deck.name}} - Cards Number: </b>
 {{ (deck.creatures | countCards) +
 (deck.spells | countCards) +
 (deck.planeswalkers| countCards) +
 (deck.lands | countCards) +
 (deck.enchantments | countCards) +
 (deck.artifacts | countCards)
-}}
+  }}
 
 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-link" (click)="importCards(mymodal)">
@@ -42,7 +42,7 @@ Deck - <b>{{deck.name}} - Cards Number: </b>
   </button>
   <button type="button" class="btn btn-link" (click)="exportDeck()"><i class="fas fa-download"></i></button>
 </div>
-
+</h5>
 <div class="container-fluid" *ngIf="!tableView">
 
   <div class="row">
@@ -62,7 +62,7 @@ Deck - <b>{{deck.name}} - Cards Number: </b>
 
     </div>
     <div class="col-lg-4 col-md-12" *ngIf="deck.planeswalkers.length >=1">
-      <h3>PlaneSwlaker <span class="badge badge-light" [innerHTML]="deck.planeswalkers | countCards"></span></h3>
+      <h3>Planeswalker <span class="badge badge-light" [innerHTML]="deck.planeswalkers | countCards"></span></h3>
       <hr>
       <app-card [cards]="deck.planeswalkers" [deck]="deck" [collections]="collections"></app-card>
     </div>
@@ -91,7 +91,7 @@ Deck - <b>{{deck.name}} - Cards Number: </b>
   </div>
 
   <div class="row">
-    <div class="col">
+    <div class="col-lg-4 col-md-12">
       <h2> Sideboard
         <button class="btn btn-sm btn-primary" (click)="addCard('', true)">Add Card</button>
       </h2>
@@ -102,7 +102,7 @@ Deck - <b>{{deck.name}} - Cards Number: </b>
       </div>
     </div>
 
-    <div class="col">
+    <div class="col-lg-4 col-md-12">
       <h2> MayBoard
         <button class="btn btn-sm btn-primary" (click)="addCard('mayboard')">Add Card</button>
       </h2>

@@ -36,14 +36,17 @@ export class MyDeckComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // add deck
-      this.decksService.addDeck(result).subscribe(value => {
-        console.log('deck new')
-        if (value && 'result' in value) {
-          result._id = value['result']['_id']
-        }
-      })
-      this.myDeck.push(result);
+      if (result != undefined){
+        // add deck
+        this.decksService.addDeck(result).subscribe(value => {
+          console.log('deck new')
+          if (value && 'result' in value) {
+            result._id = value['result']['_id']
+          }
+        })
+        this.myDeck.push(result);
+      }
+
     });
   }
 

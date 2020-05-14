@@ -6,11 +6,11 @@
         <div style="z-index: 10000"><img src="{{card.png}}" style="max-width: 15rem"/></div>
       </a>
     </div>
-    <div class="col-6">
+    <div class="col-7">
 
       <div class="card-body" style="padding: 0px!important;">
         <div class="row no-gutters">
-          <div class="col">
+          <div class="col-12">
             <div class="d-flex">
               <h5 class="h5-responsive">{{card.name}}</h5>
               <span></span>
@@ -52,9 +52,14 @@
       <app-increment-input (changeCard)="onCardChange($event)" [card]="card" [value]="card.quantity|| 0" [step]="1"
                            [min]="0" [max]="30" [wrap]="true"></app-increment-input>
     </div>
-    <div class="col">
-      {{card.price * ( card.quantity === 0 ? 1 : card.quantity) | number : '1.2-2'}}&euro;
-    </div>
+<!--    <div class="col">-->
+<!--      <div class="d-flex justify-content-center">-->
+<!--        <h5 class="h5-responsive d-flex justify-content-center">-->
+<!--          {{card.price * ( card.quantity === 0 ? 1 : card.quantity) | number : '1.2-2'}}&euro;-->
+<!--        </h5>-->
+<!--      </div>-->
+
+<!--    </div>-->
 
   </div>
 </div>
