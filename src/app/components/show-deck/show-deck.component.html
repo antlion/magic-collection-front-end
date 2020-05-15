@@ -58,8 +58,6 @@
       <h3>Creatures <span class="badge badge-light" [innerHTML]="deck.creatures | countCards"></span></h3>
       <hr>
       <app-card [cards]="deck.creatures" [deck]="deck" [collections]="collections"></app-card>
-
-
     </div>
     <div class="col-lg-4 col-md-12" *ngIf="deck.planeswalkers.length >=1">
       <h3>Planeswalker <span class="badge badge-light" [innerHTML]="deck.planeswalkers | countCards"></span></h3>
@@ -300,7 +298,7 @@
     <tr>
       <td class="table-active" colspan="6"></td>
       <td class="table-active"><b>Total</b></td>
-      <td class="table-active"><b>{{ deck.totalPrice | number : '1.2-2' }}</b></td>
+      <td class="table-active"><b>{{ deck.totalPrice | number : '1.2-2' }}&euro;</b></td>
     </tr>
     </tbody>
   </table>

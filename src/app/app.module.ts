@@ -59,62 +59,65 @@ import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    SearchCardComponent,
-    IncrementInputComponent,
-    MyDeckComponent,
-    AddDeckComponent,
-    SigninComponent,
-    SignupComponent,
-    UserProfileComponent,
-    AlertComponent,
-    ShowDeckComponent,
-    AddCardComponent,
-    CardComponent,
-    CountCardsPipe,
-    MyCollectionsComponent,
-    CollectionComponent,
-    AddCollectionComponent,
-    CountCardsPrice,
-    TableCardComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatGridListModule,
-    FlexLayoutModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    FormsModule,
-    MatDialogModule,
-    SocialLoginModule,
-    ReactiveFormsModule,
-    MatSlideToggleModule,
-    NgbModule,
-    MatMenuModule,
-    FontAwesomeModule,
-    MatTableModule,
-    MatSortModule
-  ],
-  providers: [MatDialog,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        SearchCardComponent,
+        IncrementInputComponent,
+        MyDeckComponent,
+        AddDeckComponent,
+        SigninComponent,
+        SignupComponent,
+        UserProfileComponent,
+        AlertComponent,
+        ShowDeckComponent,
+        AddCardComponent,
+        CardComponent,
+        CountCardsPipe,
+        MyCollectionsComponent,
+        CollectionComponent,
+        AddCollectionComponent,
+        CountCardsPrice,
+        TableCardComponent
     ],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        FlexLayoutModule,
+        MatListModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        FormsModule,
+        MatDialogModule,
+        SocialLoginModule,
+        ReactiveFormsModule,
+        MatSlideToggleModule,
+        NgbModule,
+        MatMenuModule,
+        FontAwesomeModule,
+        MatTableModule,
+        MatSortModule
+    ],
+    providers: [MatDialog,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
+    exports: [
+        CardComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
 

@@ -204,4 +204,15 @@ export class CollectionComponent implements OnInit {
     }
 
   }
+
+  exportCollection() {
+    let content = ''
+    this.collection.cardList.forEach(item => {
+      content += item.quantity + " " + item.name + "\n"
+    })
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url= window.URL.createObjectURL(blob);
+
+    window.open(url);
+  }
 }
