@@ -32,6 +32,7 @@ export class MyCollectionsComponent implements OnInit {
     const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
        if (result === 'save'){
          this.deckSerivce.saveNewCollection(this.collection);
+         this.collections.push(this.collection)
        }
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
