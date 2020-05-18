@@ -36,13 +36,11 @@ export class SearchCardComponent implements OnInit {
 
   @Input('event')
   set eventValue(event) {
-    console.log(event);
     this.event = event;
   }
 
   @Input('deck')
   set deckValue(deck) {
-    console.log(deck);
     this.deck = deck;
   }
 

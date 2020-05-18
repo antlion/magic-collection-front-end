@@ -50,6 +50,7 @@ import { TableCardComponent } from './components/show-deck/table-card/table-card
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import { ShowImageCardComponent } from './modals/show-image-card/show-image-card.component';
+import { ImportedCardListErrorComponent } from './modals/imported-card-list-error/imported-card-list-error.component';
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -80,7 +81,8 @@ import { ShowImageCardComponent } from './modals/show-image-card/show-image-card
         AddCollectionComponent,
         CountCardsPrice,
         TableCardComponent,
-        ShowImageCardComponent
+        ShowImageCardComponent,
+        ImportedCardListErrorComponent
     ],
     imports: [
         BrowserModule,

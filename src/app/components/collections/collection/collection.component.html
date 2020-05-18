@@ -30,7 +30,7 @@
 </div>
 
 
-    <h5 class="h5-responsive">Collection - <b>{{collection.name}} -  Total Card: {{collection.cardList | countCards}}</b>
+    <h5 class="h5-responsive" style="margin-left: 2px">Collection - <b>{{collection.name}} -  Total Card: {{collection.cardList | countCards}}</b>
 
       <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-link" (click)="importCards(mymodal)">
@@ -42,7 +42,9 @@
 
 <div class="container">
 
-
+  <div class="alert alert-danger" role="alert" *ngIf="importCardListError.length > 0">
+    <p *ngFor="let carError of importCardListError"> {{carError}}</p>
+  </div>
 
   <div class="row">
     <div class="col-lg-12">
@@ -111,7 +113,7 @@
     <form>
       <div class="form-group">
         <textarea required="required" [(ngModel)]="importCardsList"
-                  class="form-control" placeholder="Name" [ngModelOptions]="{standalone: true}">
+                  class="form-control" placeholder="1 Card Name" [ngModelOptions]="{standalone: true}">
         </textarea>
       </div>
     </form>

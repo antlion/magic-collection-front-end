@@ -7,6 +7,7 @@ import {Collection} from '../../../models/collection.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DecksService} from '../../../services/decks/decks.service';
 import {AlertService} from "../../../services/alert.service";
+import {catchError, map} from "rxjs/operators";
 
 @Component({
   selector: 'app-my-collections',
@@ -31,8 +32,11 @@ export class MyCollectionsComponent implements OnInit {
 
     const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
        if (result === 'save'){
-         this.deckSerivce.saveNewCollection(this.collection);
-         this.collections.push(this.collection)
+         this.deckSerivce.saveNewCollection(this.collection).
+           subscribe((data: any[]) => {
+             this.collection._id = data["result"]._id
+             this.collections.push(this.collection)
+           });
        }
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

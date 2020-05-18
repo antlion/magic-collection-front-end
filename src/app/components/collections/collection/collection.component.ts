@@ -47,6 +47,7 @@ export class CollectionComponent implements OnInit {
   importCardsList: any;
   filteredCard;
   showTable: boolean = true;
+  importCardListError = [];
   @ViewChild('collectionTable', { static: true }) collectionTable: MatTable<any>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -109,7 +110,6 @@ export class CollectionComponent implements OnInit {
     });
 
     const sub = dialogRef.componentInstance.onAdd.subscribe((data) => {
-      console.log('card added collection')
       //this.decksService.saveDeck(this.deck);
     });
 
@@ -121,14 +121,14 @@ export class CollectionComponent implements OnInit {
   importCards(content) {
     const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       if (result === 'Import'){
+        this.importCardListError = []
+
         let cardDeck = []
         let sidebaordDeck = []
         let sideboard= false
 
         var splitted = this.importCardsList.split("\n");
         splitted.forEach((item, index) => {
-          console.log(item[0])
-          console.log(item.substring(2,item.length))
           if (item[0] == undefined){
             sideboard = true;
             return;
@@ -141,8 +141,8 @@ export class CollectionComponent implements OnInit {
         });
 
         cardDeck.forEach((item, index) => {
-          this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
-            console.log(data);
+          this.searchCardService.get_card_by_exact_name(item[1]).subscribe(
+            (data) => {
             let carNew;
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
@@ -159,12 +159,16 @@ export class CollectionComponent implements OnInit {
             }
             this.collection.addCard(carNew);
             this.decksService.saveCollection(this.collection);
-          });
+            this.collectionTable.renderRows()
+
+            },
+            (err) => {
+              this.importCardListError.push(`Unable to import ${item[1]}`)
+            });
         })
 
         sidebaordDeck.forEach((item, index) => {
           this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
-            console.log(data);
             let carNew;
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,

@@ -55,12 +55,7 @@ export class DecksService {
   saveNewCollection(collection: Collection) {
     const localToken = this.authService.getDecodedAccessToken();
     const api = `${environment.endpoint}/my-collection/${localToken.userId}/add`;
-    return this.http.post(api, collection).subscribe(
-      map((res: Response) => {
-        return res || {};
-      }),
-      catchError(this.authService.handleError)
-    );
+    return this.http.post(api, collection);
   }
 
   getMyCollections(withCard:boolean = true){
