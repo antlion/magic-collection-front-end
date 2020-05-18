@@ -217,7 +217,7 @@ export class CollectionComponent implements OnInit {
     window.open(url);
   }
 
-  showImageCard(showcard: TemplateRef<any>, card) {
+  showImageCard( card) {
     const modalRef = this.modalService.open(ShowImageCardComponent, {ariaLabelledBy: 'modal-basic-title'})
 
     modalRef.componentInstance.card = card;
