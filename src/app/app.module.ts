@@ -49,6 +49,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TableCardComponent } from './components/show-deck/table-card/table-card.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import { ShowImageCardComponent } from './modals/show-image-card/show-image-card.component';
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -78,7 +79,8 @@ import {MatSortModule} from "@angular/material/sort";
         CollectionComponent,
         AddCollectionComponent,
         CountCardsPrice,
-        TableCardComponent
+        TableCardComponent,
+        ShowImageCardComponent
     ],
     imports: [
         BrowserModule,

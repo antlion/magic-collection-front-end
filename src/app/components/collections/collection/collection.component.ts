@@ -1,14 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {DecksService} from '../../../services/decks/decks.service';
 import {Collection} from '../../../models/collection.model';
 import {ActivatedRoute} from '@angular/router';
 import {AddCardComponent} from '../../../dialog/add-card/add-card.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Card} from "../../../models/card.model";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {SearchCardService} from "../../../services/search-card.service";
 import {MatTable, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
+import {ShowImageCardComponent} from "../../../modals/show-image-card/show-image-card.component";
 
 declare var $;
 
@@ -214,5 +215,12 @@ export class CollectionComponent implements OnInit {
     const url= window.URL.createObjectURL(blob);
 
     window.open(url);
+  }
+
+  showImageCard(showcard: TemplateRef<any>, card) {
+    const modalRef = this.modalService.open(ShowImageCardComponent, {ariaLabelledBy: 'modal-basic-title'})
+
+    modalRef.componentInstance.card = card;
+
   }
 }
