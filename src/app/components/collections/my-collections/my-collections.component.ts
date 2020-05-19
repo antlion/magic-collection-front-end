@@ -34,7 +34,7 @@ export class MyCollectionsComponent implements OnInit {
        if (result === 'save'){
          this.deckSerivce.saveNewCollection(this.collection).
            subscribe((data: any[]) => {
-             this.collection._id = data["result"]._id
+             this.collection['_id'] = data["result"]._id
              this.collections.push(this.collection)
            });
        }
