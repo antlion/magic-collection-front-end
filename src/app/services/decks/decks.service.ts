@@ -119,4 +119,24 @@ export class DecksService {
     const api = `${environment.endpoint}/my-collection/${localToken.userId}/delete/${collection['_id']}`;
     return this.http.delete(api);
   }
+
+  addCardToCollection($card: any, collectionID) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/${collectionID}/push`;
+    return this.http.post(api, $card);
+  }
+
+  modifyCardCollection($card: any, id: string) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/${id}/patchCard`;
+    return this.http.post(api, $card);
+  }
+
+  deleteCardFromCollection(card, id: string) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/${id}/deleteCard`;
+    return this.http.post(api, card);
+  }
+
+
 }

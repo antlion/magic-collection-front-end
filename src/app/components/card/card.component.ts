@@ -16,6 +16,8 @@ export class CardComponent implements OnInit {
   @Input() collection: Collection;
   @Input() todeck;
   @Input() collections:Collection[];
+  @Input() eventEmitter: EventEmitter<any>;
+
 
   constructor(private decksService: DecksService) {}
 
@@ -23,7 +25,6 @@ export class CardComponent implements OnInit {
   }
 
   onCardChange($card: Card) {
-    console.log(this.todeck);
     if(this.todeck == 'mayboard'){
       this.deck.addCardToDeck($card, false, true);
       this.decksService.saveDeck(this.deck);
@@ -33,9 +34,10 @@ export class CardComponent implements OnInit {
       this.deck.addCardToDeck($card, this.sideboard);
       this.decksService.saveDeck(this.deck);
     } else {
-      this.collection.addCard($card);
+      this.collection.addCard($card, this.decksService);
       this.decksService.saveCollection(this.collection);
     }
+    this.eventEmitter.emit($card)
 
   }
 

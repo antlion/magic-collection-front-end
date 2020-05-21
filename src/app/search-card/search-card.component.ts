@@ -56,8 +56,6 @@ export class SearchCardComponent implements OnInit {
   }
 
   createCards(data){
-
-
     const cards: Array<Card> = [];
     for (const card of data){
       this.decksService.getCardByName(card.name).subscribe((value: Array<any>) => {

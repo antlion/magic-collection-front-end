@@ -31,13 +31,16 @@
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/assets/magic-font.css",
               "src/styles.scss",
-              "./node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "./node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "./node_modules/bootstrap-select/dist/css/bootstrap-select.css"
 
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/datatables.net/js/jquery.dataTables.js"
+              "./node_modules/datatables.net/js/jquery.dataTables.js",
+              "./node_modules/bootstrap-select/dist/js/bootstrap-select.js",
+              "./node_modules/bootstrap-select/dist/js/i18n/defaults-eu.js"
             ]
           },
           "configurations": {

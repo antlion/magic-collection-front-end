@@ -23,4 +23,8 @@ export class SearchCardService {
     return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/named?exact="+name);
   }
 
+  getSetList() {
+      return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"sets?type=expansion&lang=en");
+    }
+
 }

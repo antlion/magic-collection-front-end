@@ -8,6 +8,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DecksService} from '../../../services/decks/decks.service';
 import {AlertService} from "../../../services/alert.service";
 import {catchError, map} from "rxjs/operators";
+import {SearchCardService} from "../../../services/search-card.service";
 
 @Component({
   selector: 'app-my-collections',
@@ -18,11 +19,24 @@ export class MyCollectionsComponent implements OnInit {
 
   collection = new Collection('');
   collections = []
+  sets = []
 
-  constructor(public deckSerivce: DecksService, private modalService: NgbModal, private alertService:AlertService) {
+  constructor(public deckSerivce: DecksService,public searchCardService: SearchCardService, private modalService: NgbModal, private alertService:AlertService) {
     deckSerivce.getMyCollections().subscribe(data => {
       this.collections = data['data'];
     })
+
+    searchCardService.getSetList().subscribe(data => {
+      this.sets = data['data']
+
+      this.sets = this.sets.filter(function (set) {
+        return (set.set_type == 'core' ||
+          set.set_type == 'expansion') &&
+          new Date(set['released_at']) <= new Date()
+
+      });
+    })
+
   }
 
   ngOnInit(): void {
@@ -60,5 +74,9 @@ export class MyCollectionsComponent implements OnInit {
         if(item['_id'] === event['data']._id)  this.collections.splice(index,1);
       });
     })
+  }
+
+  setEdition(value: any) {
+    this.collection.edition = value.value;
   }
 }

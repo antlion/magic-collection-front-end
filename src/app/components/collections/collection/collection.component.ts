@@ -82,18 +82,27 @@ export class CollectionComponent implements OnInit {
       this.collection.cardList.forEach((item, index) => {
         if (item.name === card.name){
           this.collection.cardList.splice(index,1)
-          this.collectionTable.renderRows()
-          this.decksService.saveCollection(this.collection);
+          this.decksService.deleteCardFromCollection(item, this.collection.id).subscribe((data) => {
+            console.log(data)
+            this.collectionTable.renderRows()
+            this.dataSource.filter = "".trim().toLowerCase();
+
+          })
           return;
         }
       })
     } else {
-      this.decksService.saveCollection(this.collection);
+      this.decksService.modifyCardCollection(card, this.collection.id).subscribe((data) => {
+        console.log(data)
+        this.collectionTable.renderRows()
+        this.dataSource.filter = "".trim().toLowerCase();
+
+      })
 
     }
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -110,7 +119,9 @@ export class CollectionComponent implements OnInit {
     });
 
     const sub = dialogRef.componentInstance.onAdd.subscribe((data) => {
-      //this.decksService.saveDeck(this.deck);
+      this.collectionTable.renderRows()
+      this.dataSource.filter = "".trim().toLowerCase();
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -157,9 +168,11 @@ export class CollectionComponent implements OnInit {
               carNew['price'] =  data['prices']['eur']
 
             }
-            this.collection.addCard(carNew);
-            this.decksService.saveCollection(this.collection);
-            this.collectionTable.renderRows()
+            this.collection.addCard(carNew, this.decksService, true);
+            this.dataSource.filter = "".trim().toLowerCase();
+
+              // this.decksService.saveCollection(this.collection);
+            // this.collectionTable.renderRows()
 
             },
             (err) => {
@@ -183,7 +196,7 @@ export class CollectionComponent implements OnInit {
               carNew['price'] =  data['prices']['eur']
 
             }
-            this.collection.addCard(carNew);
+            this.collection.addCard(carNew, this.decksService);
             this.decksService.saveCollection(this.collection);
           });
         })

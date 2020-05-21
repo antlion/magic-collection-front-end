@@ -14,7 +14,7 @@
       <div class="col-lg-12">
         <mat-list>
           <mat-list-item *ngFor="let collection of collections" style="cursor: pointer">
-            <mat-icon matListIcon><i class="mi mi-planeswalk"></i></mat-icon>
+            <mat-icon matListIcon><i class="ss ss-{{collection.edition}} ss-grad ss-1x"></i></mat-icon>
             <h4 matLine routerLink="/my-collection/{{collection._id}}">{{collection.name}}</h4>
             <p matLine class="demo-2">
               <span class="badge badge-info badge-pill" *ngIf="collection.wishList">WishList: {{collection.cardList | countCards}}</span>
@@ -49,6 +49,15 @@
     <form>
       <div class="form-group">
         <input required="required" [(ngModel)]="collection.name"  class="form-control" placeholder="Name" [ngModelOptions]="{standalone: true}">
+      </div>
+
+      <div class="form-group">
+        <mat-select placeholder="Edizione" [(ngModel)]="collection.edition" (selectionChange)="setEdition($event)">
+          <mat-option *ngFor="let set of sets" [value]="set.code">
+            <mat-icon matListIcon><i class="ss ss-{{set.code}} ss-grad ss-1x"></i></mat-icon>
+            {{set.name}}
+          </mat-option>
+        </mat-select>
       </div>
 
       <div class="form-check">

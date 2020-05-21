@@ -100,13 +100,18 @@ export class Deck {
     for (let i = 0; i < cardArray.length; i++) {
         decksService.getCardByName(cardArray[i].name, wishList).subscribe((value: Array<any>) => {
           if (value.length > 0) {
-            if (wishList) {
-              cardArray[i].inWishList = true;
-              cardArray[i].quantityCollectionWishList = value[0].cardList[0]['quantity'];
-            } else {
-              cardArray[i].inCollection = true;
-              cardArray[i].quantityCollection = value[0].cardList[0]['quantity'];
-            }
+            let quantityTemp = 0
+            value.forEach((item, index) => {
+               quantityTemp += item.cardList[0]['quantity']
+              if(wishList) {
+                cardArray[i].inWishList = true;
+                cardArray[i].quantityCollectionWishList = quantityTemp;
+              }else {
+                cardArray[i].inCollection = true;
+                cardArray[i].quantityCollection = quantityTemp;
+              }
+            })
+
 
           }
         });
