@@ -66,11 +66,14 @@ export class Deck {
   }
 
   addSingleCard(cardArray, $card: Card){
-    const filteredCard = cardArray.filter(value => value.name === $card.name)[0];
+    const filteredCard = cardArray.filter(value => (value.name === $card.name
+      && value.edition == $card.edition
+      && $card.set_number ==  value.set_number))[0];
     if ($card.quantity <= 0 && filteredCard ){
 
       for (let i = 0; i < cardArray.length; i++) {
-        if (cardArray[i].name === $card.name) {
+        if (cardArray[i].name === $card.name && cardArray[i].edition == $card.edition
+          && $card.set_number ==  cardArray[i].set_number) {
           cardArray.splice(i--, 1);
           return;
         }
@@ -111,8 +114,14 @@ export class Deck {
                 cardArray[i].quantityCollection = quantityTemp;
               }
             })
-
-
+          } else {
+            if(wishList) {
+              cardArray[i].inWishList = false;
+              cardArray[i].quantityCollectionWishList = 0;
+            }else {
+              cardArray[i].inCollection = false;
+              cardArray[i].quantityCollection = 0;
+            }
           }
         });
       }
@@ -131,7 +140,7 @@ export class Deck {
 
   findPrice(cardArray:Object[], searchCardService: SearchCardService){
     cardArray.forEach((item, index) => {
-      searchCardService.findCardPrice(item['name']).subscribe( value => {
+      searchCardService.get_card_by_exact_name(item['name'], item['edition'], item['set_number']).subscribe( value => {
         item['price'] = value['prices']['eur'];
         this.totalPrice += item['price'] *item ['quantity']
       })

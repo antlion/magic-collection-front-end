@@ -26,7 +26,10 @@ export class CountCardsPrice implements PipeTransform {
   transform(array: Card[]): number {
     let count = 0;
     for (let i = 0; i < array.length; i++){
-      count += array[i]['price'] * array[i].quantity;
+      if (array[i]['price'] == undefined) {
+        array[i]['price'] = 0
+      }
+      count += parseFloat(array[i]['price']) * array[i].quantity;
     }
     return count;
   }

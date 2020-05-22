@@ -17,8 +17,8 @@
             <mat-icon matListIcon><i class="ss ss-{{collection.edition}} ss-grad ss-1x"></i></mat-icon>
             <h4 matLine routerLink="/my-collection/{{collection._id}}">{{collection.name}}</h4>
             <p matLine class="demo-2">
-              <span class="badge badge-info badge-pill" *ngIf="collection.wishList">WishList: {{collection.cardList | countCards}}</span>
-              <span class="badge badge-info badge-pill" *ngIf="!collection.wishList">Collection: {{collection.cardList | countCards}}</span>
+              <span class="badge badge-info badge-pill" *ngIf="collection.wishList">WishList: {{collection.cardList | countCards}} - Total Price: {{collection.cardList | countCardsPrice | number : '1.2-2'}} &euro;</span>
+              <span class="badge badge-info badge-pill" *ngIf="!collection.wishList">Collection: {{collection.cardList | countCards}} - Total Price: {{collection.cardList | countCardsPrice | number : '1.2-2'}} &euro;</span>
             </p>
             <mat-action-list>
               <button mat-icon-button [matMenuTriggerFor]="menu">

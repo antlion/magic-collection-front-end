@@ -145,26 +145,32 @@ export class CollectionComponent implements OnInit {
             return;
           }
           if (sideboard){
-            sidebaordDeck.push([item[0],item.substring(2,item.length)])
+            sidebaordDeck.push(item)
           } else {
-            cardDeck.push([item[0],item.substring(2,item.length)])
+            cardDeck.push(item)
           }
         });
 
         cardDeck.forEach((item, index) => {
-          this.searchCardService.get_card_by_exact_name(item[1]).subscribe(
+          let quantity = item[0]
+          let name = item.substring(2,item.indexOf("("))
+          let set = item.substring(item.indexOf("(")+1, item.indexOf(")")).toLowerCase()
+          let code_number = item.substring(item.indexOf(") ")+2, item.length)
+          this.searchCardService.get_card_by_exact_name(name, set, code_number).subscribe(
             (data) => {
             let carNew;
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
                 data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
+              carNew.set_number = data['data'][0].collector_number
               carNew['price'] =  data['data'][0]['prices']['eur']
 
             }else{
               carNew = new Card(data['name'], data['set'],
                 data['image_uris'].art_crop, +item[0], data['type_line'],
                 data['mana_cost'], data['image_uris'].png, data['rarity']);
+              carNew.set_number = data['collector_number']
               carNew['price'] =  data['prices']['eur']
 
             }
@@ -176,31 +182,9 @@ export class CollectionComponent implements OnInit {
 
             },
             (err) => {
-              this.importCardListError.push(`Unable to import ${item[1]}`)
+              this.importCardListError.push(`Unable to import ${item}`)
             });
         })
-
-        sidebaordDeck.forEach((item, index) => {
-          this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
-            let carNew;
-            if (data['object'] === 'list'){
-              carNew = new Card(data['data'][0].name, data['data'][0].set,
-                data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
-                data['data'][0].mana_cost, data['data'][0].image_uris.png, data['rarity']);
-              carNew['price'] =  data['data'][0]['prices']['eur']
-
-            }else{
-              carNew = new Card(data['name'], data['set'],
-                data['image_uris'].art_crop, +item[0], data['type_line'],
-                data['mana_cost'], data['image_uris'].png, data['rarity']);
-              carNew['price'] =  data['prices']['eur']
-
-            }
-            this.collection.addCard(carNew, this.decksService);
-            this.decksService.saveCollection(this.collection);
-          });
-        })
-
       }
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

@@ -12,15 +12,19 @@ export class SearchCardService {
   constructor(private httpClient: HttpClient) { }
 
   public get_card_by_name(card_name:string){
-    return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/search?q="+card_name);
+    return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/search?q="+card_name+"&unique=prints");
   }
 
-  public get_card_by_exact_name(card_name:string){
-    return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/named?exact="+card_name);
+  public get_card_by_exact_name(card_name:string, set, set_number){
+    return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/"+set+"/"+set_number);
   }
 
-  findCardPrice(name: string) {
-    return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/named?exact="+name);
+  findCardPrice(name: string, edition = undefined) {
+    if (edition) {
+      return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/named?exact="+name+"&set="+edition);
+    } else {
+      return this.httpClient.get(this.SCRY_FALL_SERVER_URL+"cards/named?exact="+name);
+    }
   }
 
   getSetList() {

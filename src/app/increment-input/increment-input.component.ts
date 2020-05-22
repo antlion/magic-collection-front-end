@@ -38,7 +38,6 @@ export class IncrementInputComponent {
 
   @Input('card')
   set cardValue(card) {
-    console.log(card);
     this.card = card;
   }
 

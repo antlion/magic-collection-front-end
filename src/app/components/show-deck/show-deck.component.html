@@ -145,9 +145,9 @@
     <tr *ngFor="let card of deck.creatures;">
 <!--      <td><button class="btn btn-sm btn-outline-primary" (click)="addToCollection(addCollection)">{{card.quantityCollection}}</button></td>-->
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
-                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+                 (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -164,9 +164,9 @@
     <!-- PLANESWLAKER -->
     <tr *ngFor="let card of deck.planeswalkers;">
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
-                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+                 (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -182,9 +182,9 @@
     </tr>
     <tr *ngFor="let card of deck.spells;">
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
-                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+                 (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -200,9 +200,9 @@
     </tr>
     <tr *ngFor="let card of deck.artifacts;">
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
-                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+                (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -218,9 +218,9 @@
     </tr>
     <tr *ngFor="let card of deck.enchantments;">
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
-                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+                (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -238,7 +238,7 @@
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
                  (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -258,9 +258,9 @@
     </tr>
     <tr *ngFor="let card of deck.sideboard;">
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
-                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+                (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList"(keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity"(keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -281,8 +281,8 @@
     <tr *ngFor="let card of deck.mayboard;">
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
                  (keyup)="addCardsCollection(card,card.quantityCollection)" /></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
-      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList"(keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity"(keyup)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>

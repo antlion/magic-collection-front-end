@@ -62,12 +62,14 @@ export class SearchCardComponent implements OnInit {
         let carNew;
         if (value.length > 0) {
            carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line,
-            card.mana_cost, card.image_uris.png,card.rarity, true, value[0].cardList[0]['quantity']);
+            card.mana_cost, card.image_uris.png,card.rarity,true, value[0].cardList[0]['quantity']);
+           carNew.set_number = card.collector_number
            carNew['price'] = card['prices']['eur']
 
         } else {
            carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line,
             card.mana_cost, card.image_uris.png, card.rarity)
+          carNew.set_number = card.collector_number
           carNew['price'] = card['prices']['eur']
 
         }

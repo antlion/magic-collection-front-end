@@ -73,7 +73,7 @@
           <th mat-header-cell *matHeaderCellDef> Quantity </th>
           <td mat-cell *matCellDef="let element">
             <div class="md-form">
-              <input type="number" class="form-control" style="width: 2.0rem" [(ngModel)]="element.quantity"
+              <input  matInput  style="width: 2.0rem; text-align:center" [(ngModel)]="element.quantity"
                      (change)="addCardsCollection(element,element.quantity)">
             </div>
             </td>

@@ -7,6 +7,7 @@ export class Card {
   manaCost;
   png;
   rarity;
+  set_number
   inCollection:boolean = false
   quantityCollection: number = 0
   inWishList: boolean;

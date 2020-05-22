@@ -18,10 +18,13 @@ export class Collection {
   }
 
   addCard($card, decksService:DecksService, imported=false){
-    const filteredCard = this.cardList.filter(value => value.name === $card.name)[0];
+    const filteredCard = this.cardList.filter( value => (value.name === $card.name
+      && value.edition == $card.edition
+      && $card.set_number ==  value.set_number))[0];
     if ($card.quantity <= 0 && filteredCard ) {
       for (let i = 0; i < this.cardList.length; i++) {
-        if (this.cardList[i].name === $card.name && $card.quantity == 0) {
+        if (this.cardList[i].name === $card.name && this.cardList[i].edition == $card.edition
+          && $card.set_number ==  this.cardList[i].set_number) {
           this.cardList.splice(i--, 1);
           decksService.deleteCardFromCollection(this.cardList[i], this.id).subscribe((data) => {
             console.log(data)
@@ -48,8 +51,12 @@ export class Collection {
 
   findPrices(searchCardService: SearchCardService) {
     this.cardList.forEach((item, index) => {
-      searchCardService.findCardPrice(item['name']).subscribe( value => {
-        item['price'] = value['prices']['eur'];
+      searchCardService.get_card_by_exact_name(item['name'], item['edition'], item['set_number']).subscribe( value => {
+        if(value['prices']['eur'] == undefined && value['prices']['usd']){
+          item['price'] = value['prices']['usd'] * 0.92
+        } else {
+          item['price'] = value['prices']['eur'];
+        }
         //this.totalPrice += item['price'] *item ['quantity']
       })
     })

@@ -88,6 +88,7 @@ export class ShowDeckComponent implements OnInit {
     });
   }
 
+
   importCards(content) {
     const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       if (result === 'Import'){
@@ -97,56 +98,65 @@ export class ShowDeckComponent implements OnInit {
 
         var splitted = this.importCardsList.split("\n");
         splitted.forEach((item, index) => {
-          console.log(item[0])
-          console.log(item.substring(2,item.length))
+
           if (item[0] == undefined){
             sideboard = true;
             return;
           }
           if (sideboard){
-            sidebaordDeck.push([item[0],item.substring(2,item.length)])
+            sidebaordDeck.push(item)
           } else {
-            cardDeck.push([item[0],item.substring(2,item.length)])
+            cardDeck.push(item)
           }
         });
 
         cardDeck.forEach((item, index) => {
-          this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
-            console.log(data);
+          let quantity = item[0]
+          let name = item.substring(2,item.indexOf("(")-1)
+          let set = item.substring(item.indexOf("(")+1, item.indexOf(")")).toLowerCase()
+          let code_number = item.substring(item.indexOf(") ")+2, item.length)
+
+          this.searchCardService.get_card_by_exact_name(name, set, code_number).subscribe((data) => {
             let carNew;
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
                 data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
+              carNew.set_number = code_number
               carNew['price'] = data['data'][0]['prices']['eur']
             }else{
               carNew = new Card(data['name'], data['set'],
                 data['image_uris'].art_crop, +item[0], data['type_line'],
                 data['mana_cost'], data['image_uris'].png, data['rarity']);
+              carNew.set_number = code_number
               carNew['price'] =data['prices']['eur']
             }
             this.deck.addCardToDeck(carNew);
             this.decksService.saveDeck(this.deck);
           },
             (err) => {
-              this.importCardListError.push(`Unable to import ${item[1]}`)
+              this.importCardListError.push(`Unable to import ${item}`)
             });
 
         })
 
         sidebaordDeck.forEach((item, index) => {
-          this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
+          let quantity = item[0]
+          let name = item.substring(2,item.indexOf("("))
+          let set = item.substring(item.indexOf("(")+1, item.indexOf(")")).toLowerCase()
+          let code_number = item.substring(item.indexOf(") ")+2, item.length)
+          this.searchCardService.get_card_by_exact_name(name, set, code_number).subscribe((data) => {
             let carNew;
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
                 data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
-                data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
+                data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity, code_number);
               carNew['price'] = data['data'][0]['prices']['eur']
 
             }else{
               carNew = new Card(data['name'], data['set'],
                 data['image_uris'].art_crop, +item[0], data['type_line'],
-                data['mana_cost'], data['image_uris'].png, data['rarity']);
+                data['mana_cost'], data['image_uris'].png, data['rarity'], code_number);
               carNew['price'] =data['prices']['eur']
 
             }
@@ -154,7 +164,7 @@ export class ShowDeckComponent implements OnInit {
             this.decksService.saveDeck(this.deck);
           },
             (err) => {
-              this.importCardListError.push(`Unable to import ${item[1]}`)
+              this.importCardListError.push(`Unable to import ${item}`)
             });
         })
 
@@ -197,7 +207,7 @@ export class ShowDeckComponent implements OnInit {
   }
 
   addCardsCollection(card, quantitycollection, wishList = false){
-    if (quantitycollection != undefined && quantitycollection != ""){
+    if (quantitycollection != undefined && typeof quantitycollection != 'string'){
       let dialogRef: MatDialogRef<SpinnerComponent> = this.dialog.open(SpinnerComponent, {
         panelClass: 'transparent',
         disableClose: true
@@ -213,7 +223,8 @@ export class ShowDeckComponent implements OnInit {
             card.quantityCollectionWishList = quantitycollection;
             dialogRef.close();
           }
-
+        } else {
+          dialogRef.close();
         }
       })
     }

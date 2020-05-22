@@ -35,14 +35,12 @@ export class CardComponent implements OnInit {
       this.decksService.saveDeck(this.deck);
     } else {
       this.collection.addCard($card, this.decksService);
-      this.decksService.saveCollection(this.collection);
     }
     this.eventEmitter.emit($card)
 
   }
 
   addCardsCollection(card: Card, number: number, numberCollection = 0) {
-    console.log('addtocollection')
     card.quantity = number
     card['quantityCol'] = number + numberCollection
     this.decksService.addCardToDefaultCollection(card, false).subscribe(value => {
