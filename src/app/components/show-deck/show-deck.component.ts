@@ -197,25 +197,27 @@ export class ShowDeckComponent implements OnInit {
   }
 
   addCardsCollection(card, quantitycollection, wishList = false){
-    let dialogRef: MatDialogRef<SpinnerComponent> = this.dialog.open(SpinnerComponent, {
-      panelClass: 'transparent',
-      disableClose: true
-    });
+    if (quantitycollection != undefined && quantitycollection != ""){
+      let dialogRef: MatDialogRef<SpinnerComponent> = this.dialog.open(SpinnerComponent, {
+        panelClass: 'transparent',
+        disableClose: true
+      });
 
+      card['quantityCol'] = quantitycollection
+      this.decksService.addCardToDefaultCollection(card, wishList).subscribe(value => {
+        if (value == true || '_id' in value){
+          if (wishList){
+            dialogRef.close();
+          } else {
+            card.inCollection = true
+            card.quantityCollectionWishList = quantitycollection;
+            dialogRef.close();
+          }
 
-    card['quantityCol'] = quantitycollection
-    this.decksService.addCardToDefaultCollection(card, wishList).subscribe(value => {
-      if (value == true || '_id' in value){
-        if (wishList){
-          dialogRef.close();
-        } else {
-          card.inCollection = true
-          card.quantityCollectionWishList = quantitycollection;
-          dialogRef.close();
         }
+      })
+    }
 
-      }
-    })
   }
 
   addToCollection(content){
