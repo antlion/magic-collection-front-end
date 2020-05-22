@@ -37,7 +37,7 @@ import {AlertComponent} from './components/alert/alert.component';
 import { ShowDeckComponent } from './components/show-deck/show-deck.component';
 import { AddCardComponent } from './dialog/add-card/add-card.component';
 import { CardComponent } from './components/card/card.component';
-import {CountCardsPipe, CountCardsPrice} from './pipes/count-cards.pipe';
+import {CountCardsPipe, CountCardsPrice, ExtractType} from './pipes/count-cards.pipe';
 import { MyCollectionsComponent } from './components/collections/my-collections/my-collections.component';
 import { CollectionComponent } from './components/collections/collection/collection.component';
 import { AddCollectionComponent } from './components/collections/add-collection/add-collection.component';
@@ -51,6 +51,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import { ShowImageCardComponent } from './modals/show-image-card/show-image-card.component';
 import { ImportedCardListErrorComponent } from './modals/imported-card-list-error/imported-card-list-error.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -82,7 +83,9 @@ import { ImportedCardListErrorComponent } from './modals/imported-card-list-erro
         CountCardsPrice,
         TableCardComponent,
         ShowImageCardComponent,
-        ImportedCardListErrorComponent
+        ImportedCardListErrorComponent,
+        ExtractType,
+        SpinnerComponent
     ],
     imports: [
         BrowserModule,

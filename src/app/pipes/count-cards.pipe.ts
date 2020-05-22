@@ -33,3 +33,18 @@ export class CountCardsPrice implements PipeTransform {
 
 }
 
+
+
+@Pipe({
+  name: 'extractType'
+})
+export class ExtractType implements PipeTransform {
+
+  transform(value: string): string {
+    if(value.indexOf("—") > -1 ){
+      return value.substring(0, value.indexOf("—"))
+    }
+    return value;
+  }
+
+}

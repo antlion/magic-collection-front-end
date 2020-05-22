@@ -2,12 +2,13 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} fr
 import {ActivatedRoute} from '@angular/router';
 import {DecksService} from '../../services/decks/decks.service';
 import {Deck} from '../../models/deck.model';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddCardComponent} from '../../dialog/add-card/add-card.component';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SearchCardService} from "../../services/search-card.service";
 import {Card} from "../../models/card.model";
 import {Collection} from "../../models/collection.model";
+import {SpinnerComponent} from "../spinner/spinner.component";
 
 declare var $: any;
 
@@ -22,11 +23,13 @@ export class ShowDeckComponent implements OnInit {
 
   deck: Deck = new Deck('new-deck');
   importCardsList: any;
+  importCardListError = [];
 
   collections: Collection[] = [];
   collectionsWishList: Collection[] = [];
   selectedColletion: Collection;
   tableView: boolean = false;
+  IsWait: boolean = true;
 
   constructor(private actRoute: ActivatedRoute, private decksService: DecksService,
               private cdRef: ChangeDetectorRef, public dialog: MatDialog,
@@ -124,12 +127,15 @@ export class ShowDeckComponent implements OnInit {
             }
             this.deck.addCardToDeck(carNew);
             this.decksService.saveDeck(this.deck);
-          });
+          },
+            (err) => {
+              this.importCardListError.push(`Unable to import ${item[1]}`)
+            });
+
         })
 
         sidebaordDeck.forEach((item, index) => {
           this.searchCardService.get_card_by_exact_name(item[1]).subscribe((data) => {
-            console.log(data);
             let carNew;
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
@@ -146,7 +152,10 @@ export class ShowDeckComponent implements OnInit {
             }
             this.deck.addCardToDeck(carNew, true);
             this.decksService.saveDeck(this.deck);
-          });
+          },
+            (err) => {
+              this.importCardListError.push(`Unable to import ${item[1]}`)
+            });
         })
 
       }
@@ -188,14 +197,21 @@ export class ShowDeckComponent implements OnInit {
   }
 
   addCardsCollection(card, quantitycollection, wishList = false){
+    let dialogRef: MatDialogRef<SpinnerComponent> = this.dialog.open(SpinnerComponent, {
+      panelClass: 'transparent',
+      disableClose: true
+    });
+
+
     card['quantityCol'] = quantitycollection
     this.decksService.addCardToDefaultCollection(card, wishList).subscribe(value => {
       if (value == true || '_id' in value){
         if (wishList){
-
+          dialogRef.close();
         } else {
           card.inCollection = true
           card.quantityCollectionWishList = quantitycollection;
+          dialogRef.close();
         }
 
       }

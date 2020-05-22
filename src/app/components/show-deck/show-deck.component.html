@@ -1,26 +1,4 @@
-<!--<nav aria-label="breadcrumb">-->
-<!--  <ol class="breadcrumb">-->
-<!--    <li class="breadcrumb-item active" aria-current="page">Deck - <b>{{deck.name}} - Cards Number: </b>-->
-<!--      {{ (deck.creatures | countCards) +-->
-<!--      (deck.spells | countCards) +-->
-<!--      (deck.planeswalkers| countCards) +-->
-<!--      (deck.lands | countCards) +-->
-<!--      (deck.enchantments | countCards) +-->
-<!--      (deck.artifacts | countCards)-->
-<!--      }}-->
-<!--      <button type="button" class="btn btn-link" (click)="importCards(mymodal)">-->
-<!--        <i class="fas fa-plus"></i>-->
-<!--      </button>-->
-<!--      <button type="button" class="btn btn-link" (click)="showTable(true)" *ngIf="!tableView">-->
-<!--        <i class="fas fa-table"></i>-->
-<!--      </button>-->
-<!--      <button type="button" class="btn btn-link" (click)="showTable(false)" *ngIf="tableView">-->
-<!--        <i class="fas fa-list"></i>-->
-<!--      </button>-->
-<!--      <button type="button" class="btn btn-link" (click)="exportDeck()"><i class="fas fa-download"></i></button>-->
-<!--    </li>-->
-<!--  </ol>-->
-<!--</nav>-->
+
 
 <h5 class="h5-responsive">Deck - <b>{{deck.name}} - Cards Number: </b>
 {{ (deck.creatures | countCards) +
@@ -44,6 +22,11 @@
 </div>
 </h5>
 <div class="container-fluid" *ngIf="!tableView">
+
+
+  <div class="alert alert-danger" role="alert" *ngIf="importCardListError.length > 0">
+    <p *ngFor="let carError of importCardListError"> {{carError}}</p>
+  </div>
 
   <div class="row">
     <div class="col">
@@ -119,6 +102,11 @@
 
 
 <div class="container-fluid" *ngIf="tableView">
+
+
+  <div class="alert alert-danger" role="alert" *ngIf="importCardListError.length > 0">
+    <p *ngFor="let carError of importCardListError"> {{carError}}</p>
+  </div>
   <table class="table table-sm">
     <thead>
     <tr>
@@ -153,6 +141,7 @@
         class="badge badge-primary">{{deck.creatures | countCards}}</span>
       </td>
     </tr>
+    <!-- CREATURES -->
     <tr *ngFor="let card of deck.creatures;">
 <!--      <td><button class="btn btn-sm btn-outline-primary" (click)="addToCollection(addCollection)">{{card.quantityCollection}}</button></td>-->
       <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
@@ -172,10 +161,12 @@
       <td class="table-active" colspan="8" *ngIf="deck.planeswalkers.length > 0">Planeswlaker
         <span class="badge badge-primary">{{deck.planeswalkers | countCards}}</span></td>
     </tr>
+    <!-- PLANESWLAKER -->
     <tr *ngFor="let card of deck.planeswalkers;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -190,9 +181,10 @@
         class="badge badge-primary">{{deck.spells | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.spells;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -207,9 +199,10 @@
         <span class="badge badge-primary">{{deck.artifacts | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.artifacts;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -224,9 +217,10 @@
         <span class="badge badge-primary">{{deck.enchantments | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.enchantments;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -241,9 +235,10 @@
         class="badge badge-primary">{{deck.lands | countCards}}</span></td>
     </tr>
     <tr *ngFor="let card of deck.lands;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (keyup)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (keyup)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -262,9 +257,10 @@
       </td>
     </tr>
     <tr *ngFor="let card of deck.sideboard;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (change)="addCardsCollection(card,card.quantityCollection)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -283,9 +279,10 @@
       </td>
     </tr>
     <tr *ngFor="let card of deck.mayboard;">
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollection}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantityCollectionWishList}}"/></td>
-      <td><input type="number" style="width: 1.5rem" value="{{card.quantity}}"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollection"
+                 (keyup)="addCardsCollection(card,card.quantityCollection)" /></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantityCollectionWishList" (change)="addCardsCollection(card,card.quantityCollectionWishList, true)"/></td>
+      <td><input type="number" style="width: 1.5rem" [(ngModel)]="card.quantity" (change)="tableChange(card)"/></td>
       <td><a href="#" class="preview ">{{card.name}}
         <img class='only-show-on-hover' src="{{card.png}}"
              style="z-index: 100; position: absolute;max-width: 20rem; max-height: 20rem;border-radius: 0.5rem"/>
@@ -302,6 +299,8 @@
     </tr>
     </tbody>
   </table>
+
+
 </div>
 
 
