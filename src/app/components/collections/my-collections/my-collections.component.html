@@ -11,7 +11,9 @@
   </ol>
 </nav>
 
-
+<div class="alert alert-danger" role="alert" *ngIf="importCardListError.length > 0">
+  <p *ngFor="let carError of importCardListError"> {{carError}}</p>
+</div>
 
 <div style="padding: 13px;">
   <div class="container">

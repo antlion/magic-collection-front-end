@@ -22,7 +22,7 @@ export class MyCollectionsComponent implements OnInit {
   collection = new Collection('');
   collections = []
   sets = []
-  importCardListError: any[];
+  importCardListError = [];
   importCardsList: any;
   private modalRef: NgbModalRef;
   filteredList = [];
@@ -43,7 +43,6 @@ export class MyCollectionsComponent implements OnInit {
 
       });
     })
-
   }
 
   ngOnInit(): void {
