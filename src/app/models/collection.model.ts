@@ -1,6 +1,7 @@
 import {Card} from './card.model';
 import {SearchCardService} from "../services/search-card.service";
 import {DecksService} from "../services/decks/decks.service";
+import {async} from "rxjs-compat/scheduler/async";
 
 export class Collection {
   id: string;
@@ -17,7 +18,7 @@ export class Collection {
     this.id = id;
   }
 
-  addCard($card, decksService:DecksService, imported=false){
+  async addCard($card, decksService:DecksService, imported=false){
     const filteredCard = this.cardList.filter( value => (value.name === $card.name
       && value.edition == $card.edition
       && $card.set_number ==  value.set_number))[0];
@@ -26,7 +27,7 @@ export class Collection {
         if (this.cardList[i].name === $card.name && this.cardList[i].edition == $card.edition
           && $card.set_number ==  this.cardList[i].set_number) {
           this.cardList.splice(i--, 1);
-          decksService.deleteCardFromCollection(this.cardList[i], this.id).subscribe((data) => {
+           decksService.deleteCardFromCollection(this.cardList[i], this.id).toPromise().then(async (data) => {
             console.log(data)
           })
           return;
@@ -39,12 +40,12 @@ export class Collection {
       } else {
         filteredCard.quantity = $card.quantity
       }
-      decksService.modifyCardCollection(filteredCard, this.id).subscribe((data) => {
+      decksService.modifyCardCollection(filteredCard, this.id).toPromise().then(async (data) => {
       })
     }
     else {
       this.cardList.push($card);
-      decksService.addCardToCollection($card, this.id).subscribe((data) => {
+      decksService.addCardToCollection($card, this.id).toPromise().then(async (data) => {
       })
     }
   }

@@ -3,13 +3,14 @@ import {DecksService} from '../../../services/decks/decks.service';
 import {Collection} from '../../../models/collection.model';
 import {ActivatedRoute} from '@angular/router';
 import {AddCardComponent} from '../../../dialog/add-card/add-card.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Card} from "../../../models/card.model";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {SearchCardService} from "../../../services/search-card.service";
 import {MatTable, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {ShowImageCardComponent} from "../../../modals/show-image-card/show-image-card.component";
+import {SpinnerComponent} from "../../spinner/spinner.component";
 
 declare var $;
 
@@ -129,8 +130,12 @@ export class CollectionComponent implements OnInit {
     });
   }
 
-  importCards(content) {
-    const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+  async importCards(content) {
+    const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then(async (result) => {
+      let dialogRef: MatDialogRef<SpinnerComponent> = this.dialog.open(SpinnerComponent, {
+        panelClass: 'transparent',
+        disableClose: true
+      });
       if (result === 'Import'){
         this.importCardListError = []
 
@@ -151,13 +156,14 @@ export class CollectionComponent implements OnInit {
           }
         });
 
-        cardDeck.forEach((item, index) => {
+        for (const item of cardDeck) {
+          let index = cardDeck.indexOf(item);
           let quantity = item[0]
           let name = item.substring(2,item.indexOf("("))
           let set = item.substring(item.indexOf("(")+1, item.indexOf(")")).toLowerCase()
           let code_number = item.substring(item.indexOf(") ")+2, item.length)
-          this.searchCardService.get_card_by_exact_name(name, set, code_number).subscribe(
-            (data) => {
+          await this.searchCardService.get_card_by_exact_name(name, set, code_number).toPromise().then(
+            async (data) => {
             let carNew;
             if (data['object'] === 'list'){
               carNew = new Card(data['data'][0].name, data['data'][0].set,
@@ -184,8 +190,10 @@ export class CollectionComponent implements OnInit {
             (err) => {
               this.importCardListError.push(`Unable to import ${item}`)
             });
-        })
+        }
       }
+      dialogRef.close()
+
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });

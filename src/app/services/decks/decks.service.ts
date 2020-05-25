@@ -44,12 +44,9 @@ export class DecksService {
   saveDeck(deck: Deck) {
     const localToken = this.authService.getDecodedAccessToken();
     const api = `${environment.endpoint}/my-decks/${localToken.userId}/patch`;
-    return this.http.post(api, deck).subscribe(
-      map((res: Response) => {
-        return res || {};
-      }),
-      catchError(this.authService.handleError)
-    );
+    return this.http.post(api, deck).toPromise().then( async (data) => {
+        console.log(data)
+    })
   }
 
   saveNewCollection(collection: Collection) {
@@ -139,4 +136,16 @@ export class DecksService {
   }
 
 
+  addCardoToCollectionSet(carNew: any) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/collectionCode`;
+    return this.http.post(api, carNew);
+
+  }
+
+  searchInAllCollection(value: any) {
+    const localToken = this.authService.getDecodedAccessToken();
+    const api = `${environment.endpoint}/my-collection/${localToken.userId}/searchCardsAmongCollection/${value}`;
+    return this.http.get(api);
+  }
 }

@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {AddDeckComponent} from '../../../add-deck/add-deck.component';
 import {Deck} from '../../../models/deck.model';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddCollectionComponent} from '../add-collection/add-collection.component';
 import {Collection} from '../../../models/collection.model';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {DecksService} from '../../../services/decks/decks.service';
 import {AlertService} from "../../../services/alert.service";
 import {catchError, map} from "rxjs/operators";
 import {SearchCardService} from "../../../services/search-card.service";
+import {Card} from "../../../models/card.model";
+import {SpinnerComponent} from "../../spinner/spinner.component";
 
 @Component({
   selector: 'app-my-collections',
@@ -20,8 +22,13 @@ export class MyCollectionsComponent implements OnInit {
   collection = new Collection('');
   collections = []
   sets = []
+  importCardListError: any[];
+  importCardsList: any;
+  private modalRef: NgbModalRef;
+  filteredList = [];
 
-  constructor(public deckSerivce: DecksService,public searchCardService: SearchCardService, private modalService: NgbModal, private alertService:AlertService) {
+  constructor(public dialog: MatDialog,
+              public deckSerivce: DecksService,public searchCardService: SearchCardService, private modalService: NgbModal, private alertService:AlertService) {
     deckSerivce.getMyCollections().subscribe(data => {
       this.collections = data['data'];
     })
@@ -78,5 +85,85 @@ export class MyCollectionsComponent implements OnInit {
 
   setEdition(value: any) {
     this.collection.edition = value.value;
+  }
+
+  importCards(content) {
+    this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+  }
+
+  async importCardCode() {
+
+    let dialogRef: MatDialogRef<SpinnerComponent> = this.dialog.open(SpinnerComponent, {
+      panelClass: 'transparent',
+      disableClose: true
+    });
+    this.importCardListError = []
+
+    let cardDeck = []
+    let sidebaordDeck = []
+    let sideboard= false
+
+    var splitted = this.importCardsList.split("\n");
+    splitted.forEach((item, index) => {
+      if (item[0] == undefined){
+        sideboard = true;
+        return;
+      }
+      if (sideboard){
+        sidebaordDeck.push(item)
+      } else {
+        cardDeck.push(item)
+      }
+    });
+
+    for (const item of cardDeck) {
+      let index = cardDeck.indexOf(item);
+      let quantity = item[0]
+      let name = item.substring(2,item.indexOf("("))
+      let set = item.substring(item.indexOf("(")+1, item.indexOf(")")).toLowerCase()
+      let code_number = item.substring(item.indexOf(") ")+2, item.length)
+      await this.searchCardService.get_card_by_exact_name(name, set, code_number).toPromise().then(
+        async (data) => {
+          let carNew;
+          if (data['object'] === 'list'){
+            carNew = new Card(data['data'][0].name, data['data'][0].set,
+              data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
+              data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
+            carNew.set_number = data['data'][0].collector_number
+            carNew['price'] =  data['data'][0]['prices']['eur']
+
+          }else{
+            carNew = new Card(data['name'], data['set'],
+              data['image_uris'].art_crop, +item[0], data['type_line'],
+              data['mana_cost'], data['image_uris'].png, data['rarity']);
+            carNew.set_number = data['collector_number']
+            carNew['price'] =  data['prices']['eur']
+
+          }
+
+          let result =  await this.deckSerivce.addCardoToCollectionSet(carNew).toPromise().then(data => {
+            this.deckSerivce.getMyCollections().subscribe(data => {
+              this.collections = data['data'];
+            })
+          });
+
+          // this.decksService.saveCollection(this.collection);
+          // this.collectionTable.renderRows()
+
+        },
+        (err) => {
+          this.importCardListError.push(`Unable to import ${item}`)
+        });
+    }
+
+    dialogRef.close();
+    this.modalRef.close()
+  }
+
+  searchCard(value: any) {
+    this.deckSerivce.searchInAllCollection(value).subscribe(data => {
+      // @ts-ignore
+      this.filteredList = data
+    })
   }
 }
