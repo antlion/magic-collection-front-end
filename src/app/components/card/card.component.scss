@@ -15,3 +15,8 @@ a:hover>div { display: block; position: relative; margin: 0 auto;
     padding-left: 0;
   }
 }
+
+.windows-dialog {
+  z-index: 10000 !important;
+}
+

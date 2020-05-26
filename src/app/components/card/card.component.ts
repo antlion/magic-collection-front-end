@@ -3,6 +3,8 @@ import {Deck} from '../../models/deck.model';
 import {Card} from '../../models/card.model';
 import {DecksService} from '../../services/decks/decks.service';
 import {Collection} from '../../models/collection.model';
+import {ShowImageCardComponent} from "../../modals/show-image-card/show-image-card.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-card',
@@ -19,7 +21,7 @@ export class CardComponent implements OnInit {
   @Input() eventEmitter: EventEmitter<any>;
 
 
-  constructor(private decksService: DecksService) {}
+  constructor(private decksService: DecksService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
   }
@@ -49,5 +51,15 @@ export class CardComponent implements OnInit {
         card.quantityCollection = number + numberCollection;
       }
     })
+  }
+
+  showImageCard( card) {
+    const modalRef = this.modalService.open(ShowImageCardComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+      windowClass: 'windows-dialog'
+    })
+
+    modalRef.componentInstance.card = card;
+
   }
 }

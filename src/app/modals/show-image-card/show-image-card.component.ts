@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-show-image-card',
   templateUrl: './show-image-card.component.html',
-  styleUrls: ['./show-image-card.component.scss']
+  encapsulation: ViewEncapsulation.None,
+  styles: [".modal {z-index: 100000000;}"]
 })
 export class ShowImageCardComponent implements OnInit {
   @Input() card: any;
