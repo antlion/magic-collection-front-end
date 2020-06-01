@@ -27,7 +27,7 @@ export class Collection {
         if (this.cardList[i].name === $card.name && this.cardList[i].edition == $card.edition
           && $card.set_number ==  this.cardList[i].set_number) {
           this.cardList.splice(i--, 1);
-           decksService.deleteCardFromCollection(this.cardList[i], this.id).toPromise().then(async (data) => {
+           await decksService.deleteCardFromCollection(this.cardList[i], this.id).toPromise().then(async (data) => {
             console.log(data)
           })
           return;
@@ -38,14 +38,14 @@ export class Collection {
       if(imported){
         filteredCard.quantity += $card.quantity
       } else {
-        filteredCard.quantity = $card.quantity
+        filteredCard.quantity += 1
       }
-      decksService.modifyCardCollection(filteredCard, this.id).toPromise().then(async (data) => {
+      await decksService.modifyCardCollection(filteredCard, this.id).toPromise().then(async (data) => {
       })
     }
     else {
       this.cardList.push($card);
-      decksService.addCardToCollection($card, this.id).toPromise().then(async (data) => {
+      await decksService.addCardToCollection($card, this.id).toPromise().then(async (data) => {
       })
     }
   }

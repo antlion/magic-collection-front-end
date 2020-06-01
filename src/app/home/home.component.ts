@@ -8,24 +8,11 @@ import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-
 })
 export class HomeComponent implements OnInit {
 
-  user: SocialUser;
-  loggedIn: boolean;
 
-  constructor(private authService: AuthService) { }
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-      console.log(this.user);
-    });
   }
 
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
-
-  signOut(): void {
-    this.authService.signOut();
-  }
 }

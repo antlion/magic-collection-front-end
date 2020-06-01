@@ -8,12 +8,14 @@ import {MyDeckComponent} from './components/my-deck/my-deck.component';
 import {ShowDeckComponent} from './components/show-deck/show-deck.component';
 import {MyCollectionsComponent} from './components/collections/my-collections/my-collections.component';
 import {CollectionComponent} from './components/collections/collection/collection.component';
+import {HomeComponent} from "./home/home.component";
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/log-in', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'log-in', component: SigninComponent },
   { path: 'sign-up', component: SignupComponent },
+  { path: 'home', pathMatch: 'full' , component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'my-decks', component: MyDeckComponent, canActivate: [AuthGuard] },
   { path: 'my-decks/:id', component: ShowDeckComponent, canActivate: [AuthGuard] },

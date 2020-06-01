@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddDeckComponent} from '../../add-deck/add-deck.component';
 import {DecksService} from '../../services/decks/decks.service';
 import {catchError, map} from 'rxjs/operators';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 
@@ -16,7 +17,8 @@ import {catchError, map} from 'rxjs/operators';
 export class MyDeckComponent implements OnInit {
 
   myDeck: Deck[];
-  constructor(public dialog: MatDialog, public decksService: DecksService ) {
+  deck: Deck = new Deck("")
+  constructor(public dialog: MatDialog, public decksService: DecksService, private modalService: NgbModal ) {
 
 
 
@@ -30,23 +32,22 @@ export class MyDeckComponent implements OnInit {
     });
   }
 
-  addNewDeck() {
-    const dialogRef = this.dialog.open(AddDeckComponent, {
-      data: new Deck('')
-    });
+  addNewDeck(component) {
+    const modalRef = this.modalService.open(component, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      if (result === 'save'){
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined){
-        // add deck
-        this.decksService.addDeck(result).subscribe(value => {
+        this.decksService.addDeck(this.deck).subscribe(value => {
           console.log('deck new')
           if (value && 'result' in value) {
-            result._id = value['result']['_id']
+            this.deck["_id"]= value['result']['_id']
+            this.myDeck.push(this.deck);
+            this.deck = new Deck("")
+
           }
         })
-        this.myDeck.push(result);
       }
-
+    }, (reason) => {
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 

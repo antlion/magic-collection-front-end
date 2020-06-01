@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from './services/auth.service';
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -10,7 +11,7 @@ import {AuthService} from './services/auth.service';
 export class AppComponent {
   title = 'store-magic-collection';
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService,public  router: Router) { }
 
   logout() {
     this.authService.doLogout();

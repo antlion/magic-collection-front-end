@@ -15,15 +15,14 @@
 
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item" [ngClass]="{'active': router.url === '/home'}">
         <a class="nav-link" href="#">Home
-          <span class="sr-only">(current)</span>
         </a>
       </li>
-      <li class="nav-item" *ngIf="this.authService.isLoggedIn">
+      <li class="nav-item" *ngIf="this.authService.isLoggedIn" [ngClass]="{'active': router.url === '/my-decks'}">
         <a class="nav-link" href="my-decks" routerLinkActive="my-decks">Decks</a>
       </li>
-      <li class="nav-item" *ngIf="this.authService.isLoggedIn">
+      <li class="nav-item" *ngIf="this.authService.isLoggedIn" [ngClass]="{'active': router.url === '/my-collections'}">
         <a class="nav-link" href="my-collections">Collection</a>
       </li>
 

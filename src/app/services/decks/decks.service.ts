@@ -44,9 +44,7 @@ export class DecksService {
   saveDeck(deck: Deck) {
     const localToken = this.authService.getDecodedAccessToken();
     const api = `${environment.endpoint}/my-decks/${localToken.userId}/patch`;
-    return this.http.post(api, deck).toPromise().then( async (data) => {
-        console.log(data)
-    })
+    return this.http.post(api, deck);
   }
 
   saveNewCollection(collection: Collection) {

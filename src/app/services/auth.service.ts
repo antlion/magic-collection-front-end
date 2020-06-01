@@ -44,7 +44,7 @@ export class AuthService {
         this.getUserProfile(res._id).subscribe((res: any) => {
           this.currentUser = res.msg;
           console.log(this.currentUser);
-          this.router.navigate(['my-decks']);
+          this.router.navigate(['home']);
         });
       }, err => {
         this.alertService.error('Unable to log in: ' + stringify(err));
