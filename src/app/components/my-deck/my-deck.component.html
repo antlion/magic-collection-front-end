@@ -25,7 +25,7 @@
               </button>
 
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>Edit</button>
+                <button mat-menu-item (click)="addNewDeck(mymodal, deck)">Edit</button>
                 <button mat-menu-item (click)="deleteDeck(deck)">Delete</button>
               </mat-menu>
             </mat-action-list>

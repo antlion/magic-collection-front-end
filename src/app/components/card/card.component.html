@@ -2,7 +2,7 @@
   <div class="row no-gutters">
     <div class="col">
       <a>
-        <img src="{{card.avatar}}" (click)="showImageCard(card)" class="avatar" style="max-width: 3rem; max-height: 3rem;border-radius: 0.5rem">
+        <img src="{{card.avatar}}" (click)="showImageCard(card)" class="avatar" style="max-width: 4rem;max-height: 3rem;border-radius: 0.5rem">
 <!--        <div style="z-index: 10000"><img src="{{card.png}}" style="max-width: 15rem"/></div>-->
       </a>
     </div>
@@ -11,12 +11,11 @@
       <div class="card-body" style="padding: 0px!important;">
         <div class="row no-gutters">
           <div class="col-12">
-            <div class="d-flex">
-              <h5 class="h5-responsive">{{card.name}}</h5>
-              <span></span>
-              <p style="margin-left: 5px" [innerHTML]="card.manaCost"></p>
+            <div>
+              <p class="text-card" style="margin: 0px;">{{card.name}}</p>
+              <p [innerHTML]="card.manaCost" class="mana-class" style="margin-bottom: 0;"></p>
             </div>
-            <div class="row no-gutters">
+            <div class="row no-gutters" *ngIf="!searching">
               <div class="col">
                 <span *ngIf="card.inCollection && deck" class="badge badge-info badge-pill">
           Col: {{card.quantityCollection}}

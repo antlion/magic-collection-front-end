@@ -22,3 +22,38 @@ label{font-weight:500;}
 .cdk-global-overlay-wrapper, .cdk-overlay-container {
   z-index: 9999!important;
 }
+
+
+
+
+@media (max-width: 576px) {
+  .mana-class {
+    font-size: 20px;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) { .mana-class {
+  font-size: 20px;
+}}
+
+// Large devices (desktops, 992px and up)
+@media (max-width: 992px) { .mana-class {
+  font-size: 18px;
+} }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .mana-class {
+    font-size: 15px;
+  }
+  .text-card {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px){
+  .mana-class {
+    font-size: 12px;
+  }
+}

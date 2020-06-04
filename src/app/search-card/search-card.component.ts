@@ -1,8 +1,12 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, ViewChild} from '@angular/core';
 import {SearchCardService} from '../services/search-card.service';
 import {Card} from '../models/card.model';
 import {DecksService} from '../services/decks/decks.service';
 import {Deck} from '../models/deck.model';
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {SpinnerComponent} from "../components/spinner/spinner.component";
+import {fromEvent, Subject} from "rxjs";
+import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
 
 @Component({
   selector: 'app-search-card',
@@ -26,12 +30,53 @@ export class SearchCardComponent implements OnInit {
   @Input() collection;
   @Input() todeck;
 
-  constructor(private searchCardService: SearchCardService, private decksService: DecksService) {
+
+  @ViewChild('searchCardInput', { static: true }) movieSearchInput: ElementRef;
+
+
+  constructor(private searchCardService: SearchCardService,
+              private decksService: DecksService,
+              public dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
+    fromEvent(this.movieSearchInput.nativeElement, 'keyup').pipe(
 
+      // get value
+      map((event: any) => {
+        return event.target.value;
+      })
+      // if character length greater then 2
+      , filter(res => res.length > 2)
+
+      // Time in milliseconds between key events
+      , debounceTime(1000)
+
+      // If previous query is diffent from current
+      , distinctUntilChanged()
+
+      // subscription for response
+    ).subscribe((text: string) => {
+
+      let dialogRef: MatDialogRef<SpinnerComponent> = this.dialog.open(SpinnerComponent, {
+        panelClass: 'transparent',
+        disableClose: true
+      });
+
+
+      this.searchCardService.get_card_by_name(text).subscribe((data) => {
+        if (data['object'] === 'list'){
+          this.cardList = this.createCards(data['data']);
+        }else{
+          this.cardList = this.createCards([data]);
+        }
+        dialogRef.close()
+      }, error => {
+        dialogRef.close()
+      });
+
+    });
   }
 
   @Input('event')
@@ -45,14 +90,8 @@ export class SearchCardComponent implements OnInit {
   }
 
   onSearchChange(card_name: any) {
-    this.searchCardService.get_card_by_name(card_name).subscribe((data) => {
-      console.log(data);
-      if (data['object'] === 'list'){
-        this.cardList = this.createCards(data['data']);
-      }else{
-        this.cardList = this.createCards([data]);
-      }
-    });
+
+
   }
 
   createCards(data){

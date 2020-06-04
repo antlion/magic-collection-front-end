@@ -71,7 +71,10 @@ export class ShowDeckComponent implements OnInit {
 
   addCard(toDeck= '', sideboard=false) {
     const dialogRef = this.dialog.open(AddCardComponent, {
-      width: '600px',
+      maxWidth: '100vw',
+      maxHeight: '90vh',
+      height: '90%',
+      width: '100%',
       data: {
         deck: this.deck,
         saveToDB: true,

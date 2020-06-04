@@ -26,13 +26,15 @@ export class MyDeckComponent implements OnInit {
 
   ngOnInit(): void {
     this.myDeck = [];
-    console.log('ssss');
     this.decksService.getMyDecks().subscribe((data: any[]) => {
       this.myDeck = data['data'];
     });
   }
 
-  addNewDeck(component) {
+  addNewDeck(component, deck = undefined) {
+    if(deck != undefined){
+      this.deck = deck
+    }
     const modalRef = this.modalService.open(component, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       if (result === 'save'){
 

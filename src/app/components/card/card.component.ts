@@ -19,6 +19,7 @@ export class CardComponent implements OnInit {
   @Input() todeck;
   @Input() collections:Collection[];
   @Input() eventEmitter: EventEmitter<any>;
+  @Input() searching: boolean;
 
 
   constructor(private decksService: DecksService, private modalService: NgbModal) {}
@@ -29,12 +30,16 @@ export class CardComponent implements OnInit {
   onCardChange($card: Card) {
     if(this.todeck == 'mayboard'){
       this.deck.addCardToDeck($card, false, true);
-      this.decksService.saveDeck(this.deck);
+      this.decksService.saveDeck(this.deck).subscribe(value => {
+
+      });
       return;
     }
     if (this.deck) {
       this.deck.addCardToDeck($card, this.sideboard);
-      this.decksService.saveDeck(this.deck);
+      this.decksService.saveDeck(this.deck).subscribe(value => {
+
+      });
     } else {
       this.collection.addCard($card, this.decksService);
     }
