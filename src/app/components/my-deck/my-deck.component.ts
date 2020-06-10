@@ -44,6 +44,7 @@ export class MyDeckComponent implements OnInit {
             this.deck["_id"]= value['result']['_id']
             this.myDeck.push(this.deck);
             this.deck = new Deck("")
+            window.location.reload();
 
           }
         })
@@ -59,12 +60,25 @@ export class MyDeckComponent implements OnInit {
 
       this.myDeck.forEach( (item, index) => {
         if(item['_id'] === value['data']._id)  this.myDeck.splice(index,1);
+        window.location.reload();
       });
 
 
       }
 
     );
+  }
+
+
+  public openMenu: boolean = false;
+  isOver = false;
+
+  clickMenu(){
+    this.openMenu = !this.openMenu;
+  }
+
+  hello(mex: string){
+    alert('Hello '+mex+'!' );
   }
 }
 

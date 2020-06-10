@@ -7,34 +7,59 @@
 <!--</nav>-->
 
 
+
+
   <div class="container">
-    <button class="btn btn-sm btn aqua-gradient" type="button" (click)="addNewDeck(mymodal)">New Deck</button>
+<!--    <button class="btn btn-sm btn aqua-gradient" type="button" (click)="addNewDeck(mymodal)">New Deck</button>-->
 
     <div class="row">
       <div class="col-lg-12">
-        <mat-list>
-          <mat-list-item *ngFor="let deck of myDeck" style="cursor: pointer">
-            <mat-icon matListIcon><i class="ss ss-bcore"></i></mat-icon>
-            <h4 matLine routerLink="/my-decks/{{deck._id}}">{{deck.name}}</h4>
-            <p matLine class="demo-2">
-              <span class="badge badge-pill badge-default"> {{deck.type}}</span>
-            </p>
-            <mat-action-list>
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
+        <mat-tab-group>
+          <mat-tab label="{{item.key}}" *ngFor="let item of myDeck | groupBy: 'type'">
+            <mat-list>
+              <mat-list-item *ngFor="let deck of item.value" style="cursor: pointer">
+                <mat-icon matListIcon><i class="ss ss-bcore"></i></mat-icon>
+                <h4 matLine routerLink="/my-decks/{{deck._id}}">{{deck.name}}</h4>
+                <p matLine class="demo-2">
+                  <span class="badge badge-pill badge-default"> {{deck.type}}</span>
+                </p>
+                <mat-action-list>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
 
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="addNewDeck(mymodal, deck)">Edit</button>
-                <button mat-menu-item (click)="deleteDeck(deck)">Delete</button>
-              </mat-menu>
-            </mat-action-list>
-          </mat-list-item>
-        </mat-list>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="addNewDeck(mymodal, deck)">Edit</button>
+                    <button mat-menu-item (click)="deleteDeck(deck)">Delete</button>
+                  </mat-menu>
+                </mat-action-list>
+              </mat-list-item>
+            </mat-list>
+          </mat-tab>
+
+        </mat-tab-group>
+
+
       </div>
     </div>
 
   </div>
+
+
+
+
+
+
+
+<!-- menu button -->
+<div class="fab-container">
+  <button mat-fab class="fab-toggler" color="primary" (click)="addNewDeck(mymodal)">
+    <i class="material-icons">add</i>
+  </button>
+
+</div>
+
+
 
 
 <ng-template #mymodal let-modal>

@@ -39,8 +39,13 @@ label{font-weight:500;}
 
 // Large devices (desktops, 992px and up)
 @media (max-width: 992px) { .mana-class {
-  font-size: 18px;
-} }
+  font-size: 16px;
+  }
+
+  .text-card {
+    font-size: 15px;
+  }
+}
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
@@ -54,6 +59,9 @@ label{font-weight:500;}
 
 @media (max-width: 768px){
   .mana-class {
+    font-size: 12px;
+  }
+  .text-card {
     font-size: 12px;
   }
 }

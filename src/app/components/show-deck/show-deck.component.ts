@@ -141,7 +141,9 @@ export class ShowDeckComponent implements OnInit {
               carNew['price'] =data['prices']['eur']
             }
             this.deck.addCardToDeck(carNew);
-            await this.decksService.saveDeck(this.deck);
+            await this.decksService.saveDeck(this.deck).subscribe(value => {
+
+            });
           },
             (err) => {
               this.importCardListError.push(`Unable to import ${item}`)
@@ -171,7 +173,9 @@ export class ShowDeckComponent implements OnInit {
 
             }
             this.deck.addCardToDeck(carNew, true);
-            await this.decksService.saveDeck(this.deck);
+              await this.decksService.saveDeck(this.deck).subscribe(value => {
+
+              });
           },
             (err) => {
               this.importCardListError.push(`Unable to import ${item}`)
@@ -281,4 +285,53 @@ export class ShowDeckComponent implements OnInit {
     window.open(url);
 
   }
+
+  fabButtons = [
+    {
+      text: 'Main',
+      deck: '',
+      side: false
+    },
+    {
+      text: 'Side',
+      deck: '',
+      side: true
+    },
+    {
+      text: 'Maybe',
+      deck: 'mayboard',
+      side: false
+    },
+
+  ];
+  buttons = [];
+  fabTogglerState = 'inactive';
+
+
+  showItems() {
+    this.fabTogglerState = 'active';
+    this.buttons = this.fabButtons;
+  }
+
+  hideItems() {
+    this.fabTogglerState = 'inactive';
+    this.buttons = [];
+  }
+
+  onToggleFab() {
+    this.buttons.length ? this.hideItems() : this.showItems();
+  }
+
+
+  public openMenu: boolean = false;
+  isOver = false;
+
+  clickMenu(){
+    this.openMenu = !this.openMenu;
+  }
+
+  hello(mex: string){
+    alert('Hello '+mex+'!' );
+  }
+
 }
