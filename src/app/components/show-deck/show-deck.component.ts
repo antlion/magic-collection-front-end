@@ -9,6 +9,7 @@ import {SearchCardService} from "../../services/search-card.service";
 import {Card} from "../../models/card.model";
 import {Collection} from "../../models/collection.model";
 import {SpinnerComponent} from "../spinner/spinner.component";
+import {UtilsFunctionsService} from "../../utils-functions.service";
 
 declare var $: any;
 
@@ -34,7 +35,8 @@ export class ShowDeckComponent implements OnInit {
   constructor(private actRoute: ActivatedRoute, private decksService: DecksService,
               private cdRef: ChangeDetectorRef, public dialog: MatDialog,
               private modalService: NgbModal,
-              private searchCardService: SearchCardService) {
+              private searchCardService: SearchCardService,
+              private helperFunctions: UtilsFunctionsService) {
     this.decksService.getMyCollections(false).subscribe(data => {
       data['data'].forEach(item => {
         if (item.wishList == true){
@@ -70,6 +72,7 @@ export class ShowDeckComponent implements OnInit {
 
 
   addCard(toDeck= '', sideboard=false) {
+    this.openMenu = false
     const dialogRef = this.dialog.open(AddCardComponent, {
       maxWidth: '100vw',
       maxHeight: '90vh',
@@ -126,21 +129,10 @@ export class ShowDeckComponent implements OnInit {
           let code_number = item.substring(item.indexOf(") ")+2, item.length)
 
           await this.searchCardService.get_card_by_exact_name(name, set, code_number).toPromise().then( async (data) => {
-            let carNew;
-            if (data['object'] === 'list'){
-              carNew = new Card(data['data'][0].name, data['data'][0].set,
-                data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
-                data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
-              carNew.set_number = code_number
-              carNew['price'] = data['data'][0]['prices']['eur']
-            }else{
-              carNew = new Card(data['name'], data['set'],
-                data['image_uris'].art_crop, +item[0], data['type_line'],
-                data['mana_cost'], data['image_uris'].png, data['rarity']);
-              carNew.set_number = code_number
-              carNew['price'] =data['prices']['eur']
-            }
-            this.deck.addCardToDeck(carNew);
+
+           let cardNew =  this.helperFunctions.createCardFromScryfallResource(data, +item[0], code_number)
+
+            this.deck.addCardToDeck(cardNew);
             await this.decksService.saveDeck(this.deck).subscribe(value => {
 
             });
