@@ -102,18 +102,21 @@ export class Deck {
   findCardCollections(cardArray: Card[], decksService, wishList = false){
     for (let i = 0; i < cardArray.length; i++) {
         decksService.getCardByName(cardArray[i].name, wishList).subscribe((value: Array<any>) => {
+
           if (value.length > 0) {
             let quantityTemp = 0
-            value.forEach((item, index) => {
-               quantityTemp += item.cardList[0]['quantity']
-              if(wishList) {
-                cardArray[i].inWishList = true;
-                cardArray[i].quantityCollectionWishList = quantityTemp;
-              }else {
-                cardArray[i].inCollection = true;
-                cardArray[i].quantityCollection = quantityTemp;
-              }
-            })
+
+            for (let index in value[0]['cardList'] ){
+              quantityTemp += +value[0]['cardList'][index]['quantity']
+            }
+            if(wishList) {
+              cardArray[i].inWishList = true;
+              cardArray[i].quantityCollectionWishList = quantityTemp;
+            }else {
+              cardArray[i].inCollection = true;
+              cardArray[i].quantityCollection = quantityTemp;
+            }
+
           } else {
             if(wishList) {
               cardArray[i].inWishList = false;

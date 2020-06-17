@@ -45,7 +45,7 @@ export class Card {
     this.manaCost = this.manaCost.split('{B/G}').
     join('<span class="mi-split mi-shadow"><i class="mi mi-b"></i><i class="mi mi-g"></i></span>\n');
     this.manaCost = this.manaCost.split('{R/W}').
-    join('<span class="mi-split mi-shadow"><i class="mi mi-r"></i><i class="mi mi-w"></i></span>\n');
+    join('<sp an class="mi-split mi-shadow"><i class="mi mi-r"></i><i class="mi mi-w"></i></span>\n');
     this.manaCost = this.manaCost.split('{R/G}').
     join('<span class="mi-split mi-shadow"><i class="mi mi-r"></i><i class="mi mi-g"></i></span>\n');
     this.manaCost = this.manaCost.split('{U/B}').
@@ -54,6 +54,8 @@ export class Card {
     join('<span class="mi-split mi-shadow"><i class="mi mi-u"></i><i class="mi mi-b"></i></span>\n');
     this.manaCost = this.manaCost.split('{G/W}').
     join('<span class="mi-split mi-shadow"><i class="mi mi-g"></i><i class="mi mi-w"></i></span>\n');
+    this.manaCost = this.manaCost.split('{B/R}').
+    join('<span class="mi-split mi-shadow"><i class="mi mi-b"></i><i class="mi mi-r"></i></span>\n');
     this.manaCost = this.manaCost.split('{0}').join('<i class="mi mi-0 mi-mana mi-shadow"></i>');
     this.manaCost = this.manaCost.split('{1}').join('<i class="mi mi-1 mi-mana mi-shadow"></i>');
     this.manaCost = this.manaCost.split('{2}').join('<i class="mi mi-2 mi-mana mi-shadow"></i>');
