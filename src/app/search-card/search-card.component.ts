@@ -7,6 +7,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {SpinnerComponent} from "../components/spinner/spinner.component";
 import {fromEvent, Subject} from "rxjs";
 import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
+import {UtilsFunctionsService} from "../utils-functions.service";
 
 @Component({
   selector: 'app-search-card',
@@ -36,6 +37,7 @@ export class SearchCardComponent implements OnInit {
 
   constructor(private searchCardService: SearchCardService,
               private decksService: DecksService,
+              private helperFunctions: UtilsFunctionsService,
               public dialog: MatDialog) {
 
   }
@@ -97,24 +99,12 @@ export class SearchCardComponent implements OnInit {
   createCards(data){
     const cards: Array<Card> = [];
     for (const card of data){
-      this.decksService.getCardByName(card.name).subscribe((value: Array<any>) => {
-        let carNew;
-        if (value.length > 0) {
-           carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line,
-            card.mana_cost, card.image_uris.png,card.rarity,true, value[0].cardList[0]['quantity']);
-           carNew.set_number = card.collector_number
-           carNew['price'] = card['prices']['eur']
-
-        } else {
-           carNew = new Card(card.name, card.set, card.image_uris.art_crop, 0, card.type_line,
-            card.mana_cost, card.image_uris.png, card.rarity)
-          carNew.set_number = card.collector_number
-          carNew['price'] = card['prices']['eur']
-
-        }
-        cards.push(carNew);
-
-      })
+      let cardNew =  this.helperFunctions.createCardFromScryfallResource(card, 0, card['collector_number'])
+      cards.push(cardNew);
+      // this.decksService.getCardByName(card.name).subscribe((value: Array<any>) => {
+      //
+      //
+      // })
     }
     return cards;
   }
