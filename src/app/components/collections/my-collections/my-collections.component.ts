@@ -11,6 +11,7 @@ import {catchError, map} from "rxjs/operators";
 import {SearchCardService} from "../../../services/search-card.service";
 import {Card} from "../../../models/card.model";
 import {SpinnerComponent} from "../../spinner/spinner.component";
+import {UtilsFunctionsService} from "../../../utils-functions.service";
 
 @Component({
   selector: 'app-my-collections',
@@ -28,6 +29,7 @@ export class MyCollectionsComponent implements OnInit {
   filteredList = [];
 
   constructor(public dialog: MatDialog,
+              private helperFunctions: UtilsFunctionsService,
               public deckSerivce: DecksService,public searchCardService: SearchCardService, private modalService: NgbModal, private alertService:AlertService) {
     deckSerivce.getMyCollections().subscribe(data => {
       this.collections = data['data'];
@@ -123,24 +125,10 @@ export class MyCollectionsComponent implements OnInit {
       let code_number = item.substring(item.indexOf(") ")+2, item.length)
       await this.searchCardService.get_card_by_exact_name(name, set, code_number).toPromise().then(
         async (data) => {
-          let carNew;
-          if (data['object'] === 'list'){
-            carNew = new Card(data['data'][0].name, data['data'][0].set,
-              data['data'][0].image_uris.art_crop, +item[0], data['data'][0].type_line,
-              data['data'][0].mana_cost, data['data'][0].image_uris.png, data['data'][0].rarity);
-            carNew.set_number = data['data'][0].collector_number
-            carNew['price'] =  data['data'][0]['prices']['eur']
 
-          }else{
-            carNew = new Card(data['name'], data['set'],
-              data['image_uris'].art_crop, +item[0], data['type_line'],
-              data['mana_cost'], data['image_uris'].png, data['rarity']);
-            carNew.set_number = data['collector_number']
-            carNew['price'] =  data['prices']['eur']
+          let cardNew =  this.helperFunctions.createCardFromScryfallResource(data, +item[0], code_number)
 
-          }
-
-          let result =  await this.deckSerivce.addCardoToCollectionSet(carNew).toPromise().then(data => {
+          let result =  await this.deckSerivce.addCardoToCollectionSet(cardNew).toPromise().then(data => {
             this.deckSerivce.getMyCollections().subscribe(data => {
               this.collections = data['data'];
             })

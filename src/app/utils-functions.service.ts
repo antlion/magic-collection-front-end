@@ -28,7 +28,7 @@ export class UtilsFunctionsService {
   }
 
   extractScyrfallImageCard(scryfallCard, art_crop = true){
-    if (scryfallCard.hasOwnProperty('card_faces') &&  scryfallCard['card_faces'].length > 0){
+    if (scryfallCard.hasOwnProperty('card_faces') &&  scryfallCard['card_faces'].length > 0 && scryfallCard['layout'] != 'adventure'){
       return art_crop ? scryfallCard['card_faces'][0]['image_uris']['art_crop'] : scryfallCard['card_faces'][0]['image_uris']['png']
     } else {
       return art_crop ? scryfallCard['image_uris']['art_crop'] : scryfallCard['image_uris']['png']
